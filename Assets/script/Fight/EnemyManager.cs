@@ -1,0 +1,87 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+//敌人管理器
+public class EnemyManager 
+{
+    public static EnemyManager Instance = new EnemyManager();
+
+    private List<Enemy> enemyList;//存储战斗中的敌人
+ 
+    //加载敌人资源
+    public void loadRes(string id)
+    {
+
+        enemyList = new List<Enemy>();
+        
+        //这里读取的是关卡表
+        /*
+        Id	Name	EnemyIds	Pos
+        Id	关卡名称	敌人Id的数组	所有怪物的位置
+        10001	1	10001	"0,0,0"
+        10002	2	10001=10001	"0,0,0=0,0,1"
+        10003	3	10001=10002=10003	"3,0,1=0,0,1=-3,0,1"
+        */
+        Dictionary<string, string> LevelData = GameConfigManager.Instance.GetLevelById(id);
+
+        string[] enemyids = LevelData["EnemyIds"].Split('=');
+
+        string[] enemyPos = LevelData["Pos"].Split('=');
+
+        for (int i = 0; i < enemyids.Length; i++)
+        {
+            string enemyid = enemyids[i];
+            string[] posArr = enemyPos[i].Split(',');
+
+            //第一关敌人位置配置
+            //float x = float.Parse(posArr[0]);
+            float x = float.Parse("-0.3");
+            //float y = float.Parse(posArr[1]);
+            float y = float.Parse("1.4");
+
+            //根据id获取单个敌人的信息
+            Dictionary<string, string> enemyData = GameConfigManager.Instance.GetEnemyById(enemyid);
+
+            Debug.Log(enemyData["Model"]);
+            
+            GameObject obj = Object.Instantiate(Resources.Load(enemyData["Model"])) as GameObject;//从资源加载对应的敌人模型    
+
+            Enemy enemy = obj.AddComponent<Enemy>();//为敌人物体添加脚本
+
+            enemy.Init(enemyData);//存储敌人信息
+
+            enemyList.Add(enemy);//存储到敌人列表
+
+            obj.transform.position = new Vector2(x, y);
+        }
+    }
+
+    //删除敌人
+    public void DeleteEnemy(Enemy enemy)
+    {
+        enemyList.Remove(enemy);
+
+        //后续做是否击杀敌人的判断
+        if (enemyList.Count == 0)
+        {
+            FightManager.Instance.ChangeType(FightType.Win);
+        }
+    }
+    //执行仍然存活的怪物的行为
+    public IEnumerator DoAllEnemyAction()
+    {
+        for (int i = 0; i < enemyList.Count; i++)
+        {
+            yield return FightManager.Instance.StartCoroutine(enemyList[i].DoAction());
+        }
+
+        //行动完后更新所有敌人行为
+        for (int i = 0; i < enemyList.Count; i++)
+        {
+            enemyList[i].SetRandomAction();
+        }
+
+        //切换到玩家回合
+        FightManager.Instance.ChangeType(FightType.Player);
+    }
+}
