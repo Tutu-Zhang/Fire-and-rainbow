@@ -15,21 +15,18 @@ public class FightUI : UIBase
     private Text defText;
     private GameObject playerHPBar;
 
-    private List<CardItem> cardItemList; //存储卡牌物体的集合
+    private GameObject playCardZone;
+    private GameObject cardZone;
+    private GameObject cardArea;
+
+    private List<CardItem> cardItemList; //手牌区集合
+    private List<CardItem> PlayCardList; //出牌区集合
     private void Awake()
     {
         cardItemList = new List<CardItem>();
+        PlayCardList = new List<CardItem>();
 
 
-        //这里应该读取UI元素的text和img
-        //cardCountText = transform.Find("").GetComponent<Text>();
-        //noCardCountText = transform.Find("").GetComponent<Text>();
-        //powerText = transform.Find("").GetComponent<Text>();
-        playerHPBar = GameObject.Find("playerHPBar");
-        Debug.Log("找到血条");
-        hpText = playerHPBar.transform.Find("PlayerHPText").GetComponent<Text>();
-        hpImage = playerHPBar.transform.Find("PlayerHPFill").GetComponent<Image>();
-        defText = playerHPBar.transform.Find("PlayerDefText").GetComponent<Text>();
 
         //获取回合切换按钮
         GameObject.Find("turnBtn").GetComponent<Button>().onClick.AddListener(onChangeTurnBtn);
@@ -41,6 +38,7 @@ public class FightUI : UIBase
         //只有玩家才能切换
         if (FightManager.Instance.fightUnit is FightPlayerTurn)
         {
+
             FightManager.Instance.ChangeType(FightType.Enemy);
         }
         Debug.Log("回合切换");
@@ -48,8 +46,21 @@ public class FightUI : UIBase
 
     private void Start()
     {
+
+        playerHPBar = UIManager.Instance.CreatePlayerHpItem();
+        Debug.Log("找到血条");
+        hpText = playerHPBar.transform.Find("PlayerHPText").GetComponent<Text>();
+        hpImage = playerHPBar.transform.Find("PlayerHPFill").GetComponent<Image>();
+        defText = playerHPBar.transform.Find("PlayerDefText").GetComponent<Text>();
+
+        playCardZone = transform.Find("PlayCardZone").gameObject;
+        cardZone = transform.Find("CardZone").gameObject;
+        cardArea = transform.Find("CardArea").gameObject;
+
         UpdateHP();
         UpdateDef();
+
+
         //UpdateCardCount();
         //UpdateUsedCardCount();
         //UpdatePower();
@@ -92,7 +103,7 @@ public class FightUI : UIBase
             //唯一的标识（不能重复）	名称	卡牌添加的脚本	卡牌类型的Id	描述	卡牌的背景图资源路径	图标资源的路径	消耗的费用	属性值	特效
             //1000	普通攻击	AttackCardItem	10001	对单个敌人进行{0}点的伤害	Icon/BlueCard	Icon/sword_03e	1	3	Effects/GreenBloodExplosion
 
-            GameObject obj = Instantiate(Resources.Load("UI-img/card/cardBackground"), transform) as GameObject;//加载卡牌UI
+            GameObject obj = Instantiate(Resources.Load("UI-img/card/cardBackground"), transform.Find("CardArea") ,false) as GameObject;//加载卡牌UI
             obj.GetComponent<Transform>().position = new Vector2(-3.1f, -3.2f);
             //var Item = obj.AddComponent<CardItem>();
             string cardId = FightCardManager.Instance.DrawCard();
@@ -101,6 +112,7 @@ public class FightUI : UIBase
             CardItem Item = obj.AddComponent(System.Type.GetType(data["Script"])) as CardItem;
             Item.Init(data,i);
             cardItemList.Add(Item);
+            Debug.Log("现在有" + cardItemList.Count + "张牌");
         }
     }
 
@@ -108,13 +120,67 @@ public class FightUI : UIBase
     public void UpdateCardItemPos()
     {
         Debug.Log("更新卡牌位置");
-        float offset = 10.0f / 8;
-        Vector2 startPos = new Vector2(-2.8f, -3.37f);
-        for (int i = 0; i < cardItemList.Count; i++)
+        for(int i = 0; i < cardItemList.Count; i++)
         {
-            cardItemList[i].GetComponent<Transform>().position = startPos;
-            startPos.x = startPos.x + offset;
+            Transform card = cardItemList[i].transform;
+            card.position = cardZone.transform.GetChild(i).position;
+            card.transform.localScale = new Vector2(1,1);
         }
+     
+    }
+
+    public void UpdatePlayCardPos()
+    {
+        Debug.Log("更新上方牌区位置");
+        for (int i = 0; i < PlayCardList.Count; i++)
+        {
+            Transform card = PlayCardList[i].transform;
+            card.position = playCardZone.transform.GetChild(i).position;
+            card.transform.localScale = new Vector2(1, 1);
+        }
+    }
+
+    public bool MoveCardToPlayArea(CardItem card)
+    {
+        CardItem nowcard = card;
+        Debug.Log(nowcard);
+
+        if (PlayCardList.Count < 4)
+        {
+            PlayCardList.Add(nowcard);
+            UpdatePlayCardPos();
+            //Debug.Log("已经移动卡牌至出牌区");
+            cardItemList.Remove(nowcard);
+            UpdateCardItemPos();
+            Debug.Log("现在手牌区和出牌区各有" + cardItemList.Count + " " + PlayCardList.Count + "张牌");
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void MoveCardToHandArea(CardItem card)
+    {
+        CardItem nowcard = card;
+        Debug.Log(nowcard);
+        cardItemList.Add(nowcard);
+        UpdateCardItemPos();
+        //Debug.Log("已经移动卡牌至手牌");
+        PlayCardList.Remove(nowcard);
+        UpdatePlayCardPos();
+        Debug.Log("现在手牌区和出牌区各有" + cardItemList.Count + " " + PlayCardList.Count + "张牌");
+    }
+
+    public int GetCardNum()
+    {
+        return cardItemList.Count;
+    }
+
+    public int GetPlayCardNum()
+    {
+        return PlayCardList.Count;
     }
 
     //删除卡牌物体
@@ -137,7 +203,7 @@ public class FightUI : UIBase
         UpdateCardItemPos();
 
         //卡牌移到弃牌堆效果
-        item.GetComponent<RectTransform>().DOAnchorPos(new Vector2(1000, -700), 0.25f);
+        //item.GetComponent<RectTransform>().DOAnchorPos(new Vector2(1000, -700), 0.25f);
 
         item.transform.DOScale(0, 0.25f);
 

@@ -21,8 +21,6 @@ public class FightInit : FightUnit
         AudioManager.Instance.Init();
         AudioManager.Instance.PlayBGM("fightBGM");
 
-        //加载敌人资源
-        EnemyManager.Instance.loadRes("10001");
 
         //初始化战斗卡牌数据
         FightCardManager.Instance.Init();
@@ -30,6 +28,9 @@ public class FightInit : FightUnit
         //加载战斗元素
         UIManager.Instance.ShowUI<FightUI>("fightBackground");
         //UIManager.Instance.ShowUI<LoginUI>("LoginUI");
+
+        //加载敌人资源
+        EnemyManager.Instance.loadRes("10001");
 
         //切换到玩家回合
         FightManager.Instance.ChangeType(FightType.Player);

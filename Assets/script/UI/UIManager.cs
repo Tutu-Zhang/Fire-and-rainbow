@@ -25,17 +25,16 @@ public class UIManager : MonoBehaviour
         UIBase ui = Find(uiName);
         if (ui == null) 
         {
-            Debug.Log("no finding");
             //如果集合中没有 需要从Resources/UI中加载
             GameObject obj = Instantiate(Resources.Load("UI/" + uiName), canvasTF) as GameObject;
             //改名字
             obj.name = uiName;
-
-            Debug.Log("no finding 2");
             //添加需要的脚本
             ui = obj.AddComponent<T>();
             //添加到集合uiList
             uiList.Add(ui);
+            //调整显示层级为最底层
+            obj.transform.SetAsFirstSibling();
 
             //显示当前的UIlist，用于调试
             System.Console.WriteLine(uiList);
@@ -108,26 +107,37 @@ public class UIManager : MonoBehaviour
     /// <returns></returns>
     public GameObject CreateActionIcon()
     {
-        GameObject obj = Instantiate(Resources.Load("UI-img/figth-elements/action"),canvasTF) as GameObject;//加载UI文件夹中敌人行动的UI
-        obj.transform.SetAsFirstSibling();//设置在父级的第一位
+        GameObject obj = Instantiate(Resources.Load("UI-img/figth-elements/action"), canvasTF.Find("fightBackground")) as GameObject;//加载UI文件夹中敌人行动的UI
+        obj.transform.SetAsLastSibling();//设置在父级的最后一位
+        Debug.Log("加载敌人行动图标");
         return obj;
-        Debug.Log("加载敌人行动");
     }
 
     //创建敌人底部血量物体
-    public GameObject CreateHpItem()
+    public GameObject CreateEnemyHpItem()
     {
-        GameObject obj = Instantiate(Resources.Load("UI-img/figth-elements/EnemyHPBar"), canvasTF) as GameObject;//加载UI文件夹中血量的UI
-        obj.transform.SetAsFirstSibling();//设置在父级的最后一位
+        GameObject obj = Instantiate(Resources.Load("UI/EnemyHPBar"), canvasTF.Find("fightBackground")) as GameObject;//加载UI文件夹中血量的UI
+        obj.transform.SetAsLastSibling();//设置在父级的最后一位
+        Debug.Log("加载敌人血量条");
         return obj;
-        Debug.Log("加载敌人血量");
+        
+    }
+
+    //创建玩家底部血量物体
+    public GameObject CreatePlayerHpItem()
+    {
+        GameObject obj = Instantiate(Resources.Load("UI/playerHPBar"), canvasTF.Find("fightBackground")) as GameObject;//加载UI文件夹中血量的UI
+        obj.transform.SetAsLastSibling();//设置在父级的最后一位
+        Debug.Log("加载玩家血量条");
+        return obj;
+
     }
 
     //提示界面（回合切换等等
     public void ShowTip(string msg,Color color,System.Action callBack = null)
     {
         GameObject obj = Instantiate(Resources.Load("UI/turnChangeUI"), canvasTF) as GameObject;//加载UI文件夹中提示UI
-        obj.transform.SetAsFirstSibling();//置于最上层
+        obj.transform.SetAsLastSibling();//置于最上层
         Text text = obj.transform.Find("turnChangeText").GetComponent<Text>();
         text.color = color;
         text.text = msg;

@@ -48,7 +48,7 @@ public class Enemy : MonoBehaviour
 
         type = ActionType.None;
         //加载敌人血条和行动图标
-        hpItemObj = UIManager.Instance.CreateHpItem();
+        hpItemObj = UIManager.Instance.CreateEnemyHpItem();
         actionObj = UIManager.Instance.CreateActionIcon();
 
 

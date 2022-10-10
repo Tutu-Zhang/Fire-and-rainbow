@@ -9,36 +9,6 @@ using System;
 public class AttackCardItem : CardItem, IPointerDownHandler
 {
 
-    public override void OnBeginDrag(PointerEventData eventData)
-    {
-        
-    }
-
-    public override void OnDrag(PointerEventData eventData)
-    {
-        
-    }
-
-    public override void OnEndDrag(PointerEventData eventData)
-    {
-        
-    }
-    //按下
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        //播放声音
-        //AudioManager.Instance.PlayEffect("文件路径中的特效");
-
-        //隐藏鼠标
-        Cursor.visible = false;
-
-        //关闭所有协同程序
-        StopAllCoroutines();
-
-        //启动鼠标协同程序
-        StartCoroutine(OnMouseDownRight(eventData));
-
-    }
 
     private IEnumerator OnMouseDownRight(PointerEventData pData)
     {

@@ -12,14 +12,11 @@ public class FightPlayerTurn : FightUnit
         turnBtn.SetActive(true);
         UIManager.Instance.ShowTip("玩家回合", Color.green, delegate ()
         {
-            //回复行动力
-            //FightManager.Instance.CurPowerCount = 3;
-            //UIManager.Instance.GetUI<FightUI>("FightUI").UpdatePower();
 
             //若手牌已经耗尽，重新补满手牌
             if (FightCardManager.Instance.HasCard() == false)
             {
-                FightCardManager.Instance.Init();
+                FightCardManager.Instance.PrintCard();
 
                 //UIManager.Instance.GetUI<FightUI>("FightUI").UpdateCardCount();
             }
@@ -27,13 +24,14 @@ public class FightPlayerTurn : FightUnit
 
             //抽牌
 
-            int drawCardCount = FightCardManager.Instance.cardList.Count;
-            Debug.Log(drawCardCount);//这个数目有点问题，先设置为8
+            int drawCardCount = 8 - UIManager.Instance.GetUI<FightUI>("fightBackground").GetCardNum();
+            Debug.Log(drawCardCount);//已经修改为补满牌
             UIManager.Instance.GetUI<FightUI>("fightBackground").CreatCardItem (drawCardCount);//补满卡牌
             UIManager.Instance.GetUI<FightUI>("fightBackground").UpdateCardItemPos();//更新卡牌位置
 
             //更新卡牌数
             //UIManager.Instance.GetUI<FightUI>("FightUI").UpdateCardCount();
+
         });
     }
     public override void OnUpdate()

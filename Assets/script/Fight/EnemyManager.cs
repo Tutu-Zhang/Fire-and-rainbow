@@ -33,16 +33,11 @@ public class EnemyManager
             string enemyid = enemyids[i];
             string[] posArr = enemyPos[i].Split(',');
 
-            //第一关敌人位置配置
-            //float x = float.Parse(posArr[0]);
-            float x = float.Parse("-0.3");
-            //float y = float.Parse(posArr[1]);
-            float y = float.Parse("1.4");
 
             //根据id获取单个敌人的信息
             Dictionary<string, string> enemyData = GameConfigManager.Instance.GetEnemyById(enemyid);
 
-            Debug.Log(enemyData["Model"]);
+            Debug.Log("敌人模型提取" + enemyData["Model"]);
             
             GameObject obj = Object.Instantiate(Resources.Load(enemyData["Model"])) as GameObject;//从资源加载对应的敌人模型    
 
@@ -52,7 +47,9 @@ public class EnemyManager
 
             enemyList.Add(enemy);//存储到敌人列表
 
-            obj.transform.position = new Vector2(x, y);
+            //第一关敌人位置配置
+            Debug.Log(UIManager.Instance.GetUI<FightUI>("fightBackground").transform.Find("EnemyCase").position);
+            obj.transform.position = UIManager.Instance.GetUI<FightUI>("fightBackground").transform.Find("EnemyCase").position;
         }
     }
 
