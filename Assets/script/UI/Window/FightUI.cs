@@ -21,15 +21,12 @@ public class FightUI : UIBase
 
     private List<CardItem> cardItemList; //手牌区集合
     private List<CardItem> PlayCardList; //出牌区集合
+
+    Button turnBtn, UseBtn;
     private void Awake()
     {
         cardItemList = new List<CardItem>();
         PlayCardList = new List<CardItem>();
-
-
-
-        //获取回合切换按钮
-        GameObject.Find("turnBtn").GetComponent<Button>().onClick.AddListener(onChangeTurnBtn);
     }
 
     //玩家回合结束，切换到敌人回合
@@ -38,10 +35,25 @@ public class FightUI : UIBase
         //只有玩家才能切换
         if (FightManager.Instance.fightUnit is FightPlayerTurn)
         {
-
+            RemoveAllCards(true);
             FightManager.Instance.ChangeType(FightType.Enemy);
         }
         Debug.Log("回合切换");
+    }
+
+    private void UseCard()
+    {
+        string cardId = "";
+        for(int i = 0; i < PlayCardList.Count; i++)
+        {
+            cardId = cardId + PlayCardList[i].GetCardNum().ToString();
+        }
+        Debug.Log(cardId);
+
+
+        RemoveAllCards(true);//为true时为移除出牌区卡片，false时移除手牌区
+        CardEffects.MatchCard(cardId); //Matchcard顺便就执行卡的效果
+
     }
 
     private void Start()
@@ -56,6 +68,14 @@ public class FightUI : UIBase
         playCardZone = transform.Find("PlayCardZone").gameObject;
         cardZone = transform.Find("CardZone").gameObject;
         cardArea = transform.Find("CardArea").gameObject;
+        turnBtn = GameObject.Find("turnBtn").GetComponent<Button>();
+        UseBtn = GameObject.Find("UseBtn").GetComponent<Button>();
+        UseBtn.gameObject.SetActive(false);
+
+        //获取回合切换按钮
+        turnBtn.onClick.AddListener(onChangeTurnBtn);
+        //获取出牌按钮
+        UseBtn.onClick.AddListener(UseCard);
 
         UpdateHP();
         UpdateDef();
@@ -108,11 +128,11 @@ public class FightUI : UIBase
             //var Item = obj.AddComponent<CardItem>();
             string cardId = FightCardManager.Instance.DrawCard();
             Dictionary<string, string> data = GameConfigManager.Instance.GetCardById(cardId);
-            Debug.Log(System.Type.GetType(data["Script"]));
+            Debug.Log("当前创建的牌类型为" + System.Type.GetType(data["Script"]));
             CardItem Item = obj.AddComponent(System.Type.GetType(data["Script"])) as CardItem;
             Item.Init(data,i);
             cardItemList.Add(Item);
-            Debug.Log("现在有" + cardItemList.Count + "张牌");
+            //Debug.Log("现在有" + cardItemList.Count + "张牌");
         }
     }
 
@@ -138,6 +158,11 @@ public class FightUI : UIBase
             card.position = playCardZone.transform.GetChild(i).position;
             card.transform.localScale = new Vector2(1, 1);
         }
+
+        if (PlayCardList.Count == 4)
+            UseBtn.gameObject.SetActive(true);
+        else
+            UseBtn.gameObject.SetActive(false);
     }
 
     public bool MoveCardToPlayArea(CardItem card)
@@ -184,26 +209,21 @@ public class FightUI : UIBase
     }
 
     //删除卡牌物体
-    public void RemoveCard(CardItem item)
+    public void RemoveCard(CardItem item, bool ifInPlayArea)
     {
-        AudioManager.Instance.PlayEffect("");//删除音效（文件夹路径
+        //AudioManager.Instance.PlayEffect("");//删除音效（文件夹路径
 
         item.enabled = false;//禁用卡牌逻辑
 
-        //添加到弃牌集合
-        //FightCardManager.Instance.usedCardList.Add(item.data["Id"]);
-
-        //更新使用后的卡牌数量
-        //noCardCountText.text = FightCardManager.Instance.usedCardList.Count.ToString();
-
         //从集合中删除
-        cardItemList.Remove(item);
+        if (ifInPlayArea)
+            PlayCardList.Remove(item);
+        else 
+            cardItemList.Remove(item);
 
         //刷新卡牌位置
         UpdateCardItemPos();
-
-        //卡牌移到弃牌堆效果
-        //item.GetComponent<RectTransform>().DOAnchorPos(new Vector2(1000, -700), 0.25f);
+        UpdatePlayCardPos();
 
         item.transform.DOScale(0, 0.25f);
 
@@ -213,11 +233,21 @@ public class FightUI : UIBase
     }
 
     //清空所有卡牌
-    public void RemoveAllCards()
+    public void RemoveAllCards(bool ifInPlayArea)
     {
-        for (int i = cardItemList.Count-1; i >= 0; i--)
+        if (!ifInPlayArea)
         {
-            RemoveCard(cardItemList[i]);
+            for (int i = cardItemList.Count - 1; i >= 0; i--)
+            {
+                RemoveCard(cardItemList[i], ifInPlayArea);
+            }
+        }
+        else
+        {
+            for (int i = PlayCardList.Count - 1; i >= 0; i--)
+            {
+                RemoveCard(PlayCardList[i], ifInPlayArea);
+            }
         }
     }
 }

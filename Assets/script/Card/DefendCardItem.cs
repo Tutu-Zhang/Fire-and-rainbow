@@ -6,5 +6,8 @@ using UnityEngine.EventSystems;
 //·ÀÓùĞ§¹û¿¨ÅÆ
 public class DefendCardItem : CardItem
 {
-
+    private void Awake()
+    {
+        cardNum = 0;
+    }
 }

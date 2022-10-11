@@ -21,7 +21,7 @@ public class FightCardManager
 
         System.Random random = new System.Random();
         //补满手牌
-        while (cardList.Count<8)
+        while (cardList.Count<16)
         {
             /*//随机抽一张卡
             int tempIndex = Random.Range(0, tempList.Count);
@@ -43,14 +43,14 @@ public class FightCardManager
             cardList.Add(num);//相当于手牌列表
         }
 
-        Debug.Log(cardList.Count);//输出手牌堆数量
+       // Debug.Log(cardList.Count);//输出手牌堆数量
     }
 
     public void PrintCard()
     {
         System.Random random = new System.Random();
         //补满手牌
-        while (cardList.Count < 8)
+        while (cardList.Count < 16)
         {
             /*//随机抽一张卡
             int tempIndex = Random.Range(0, tempList.Count);
@@ -72,7 +72,7 @@ public class FightCardManager
             cardList.Add(num);//相当于手牌列表
         }
 
-        Debug.Log(cardList.Count);//输出手牌堆数量
+        //Debug.Log(cardList.Count);//输出手牌堆数量
     }
 
     //是否满卡
@@ -84,6 +84,9 @@ public class FightCardManager
     //抽卡
     public string DrawCard()
     {
+        if (!HasCard())
+            PrintCard();
+
         string id = cardList[cardList.Count - 1];//牌库？
         cardList.RemoveAt(cardList.Count - 1);//将对应卡牌从牌库中移除
         return id;
