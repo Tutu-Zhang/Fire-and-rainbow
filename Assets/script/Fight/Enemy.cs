@@ -79,32 +79,6 @@ public class Enemy : MonoBehaviour
 
     }
 
-    //随机设定一个敌人行动
-    public void SetRandomAction()
-    {
-        int ran = Random.Range(0, 3);
-
-        type = (ActionType)ran;
-
-
-        switch (type)
-        {
-            case ActionType.None:
-                //设置图标不显示
-                attackTf.gameObject.SetActive(false);
-                defendTf.gameObject.SetActive(false);
-                break;
-            case ActionType.Defend:
-                attackTf.gameObject.SetActive(false);
-                defendTf.gameObject.SetActive(true);
-                break;
-            case ActionType.Attack:
-                attackTf.gameObject.SetActive(true);
-                defendTf.gameObject.SetActive(false);
-                break;
-        }
-    }
-
     //更新敌人血量
     public void UpdateHp()
     {
@@ -141,6 +115,7 @@ public class Enemy : MonoBehaviour
 
             //受伤动画
             ani.Play("Hited", 0, 0);
+            UpdateDefend();
         }
         else //再扣血量
         {
@@ -216,5 +191,32 @@ public class Enemy : MonoBehaviour
         //播放待机
         ani.Play("idle");
 
+    }
+
+
+    //随机设定一个敌人行动
+    public void SetRandomAction()
+    {
+        int ran = Random.Range(0, 3);
+
+        type = (ActionType)ran;
+
+
+        switch (type)
+        {
+            case ActionType.None:
+                //设置图标不显示
+                attackTf.gameObject.SetActive(false);
+                defendTf.gameObject.SetActive(false);
+                break;
+            case ActionType.Defend:
+                attackTf.gameObject.SetActive(false);
+                defendTf.gameObject.SetActive(true);
+                break;
+            case ActionType.Attack:
+                attackTf.gameObject.SetActive(true);
+                defendTf.gameObject.SetActive(false);
+                break;
+        }
     }
 }

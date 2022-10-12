@@ -28,6 +28,8 @@ public class EnemyManager
 
         string[] enemyPos = LevelData["Pos"].Split('=');
 
+        Debug.Log("加载了" + enemyids.Length + "个敌人");
+
         for (int i = 0; i < enemyids.Length; i++)
         {
             string enemyid = enemyids[i];
@@ -81,4 +83,10 @@ public class EnemyManager
         //切换到玩家回合
         FightManager.Instance.ChangeType(FightType.Player);
     }
+
+    public Enemy GetEnemy(int index)
+    {
+        return enemyList[index];
+    }
+
 }

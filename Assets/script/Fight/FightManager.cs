@@ -93,6 +93,21 @@ public class FightManager : MonoBehaviour
         UIManager.Instance.GetUI<FightUI>("fightBackground").UpdateDef();
     }
 
+    public void GetRecover(int recover)
+    {
+        CurHP += recover;
+        if (CurHP > MaxHP)
+            CurHP = MaxHP;
+
+        UIManager.Instance.GetUI<FightUI>("fightBackground").UpdateHP();
+        UIManager.Instance.GetUI<FightUI>("fightBackground").UpdateDef();
+    }
+
+    public void Attack_Enemy(int val)
+    {
+        EnemyManager.Instance.GetEnemy(0).Hited(val);
+    }
+
     private void Update()
     {
         if (fightUnit != null)
