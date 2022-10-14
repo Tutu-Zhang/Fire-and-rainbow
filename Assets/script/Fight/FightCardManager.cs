@@ -20,22 +20,12 @@ public class FightCardManager
         //usedCardList = new List<string>();
 
         System.Random random = new System.Random();
-        //补满手牌
+        
         while (cardList.Count<16)
         {
-            /*//随机抽一张卡
-            int tempIndex = Random.Range(0, tempList.Count);
-
-            //添加到卡堆
-            cardList.Add(tempList[tempIndex]);
-
-            //临时集合删除
-            tempList.RemoveAt(tempIndex);*/
-
-
             string num = "0";
             double temp = random.NextDouble();
-            if (temp >= 0.75)
+            if (temp >= 0.6)
             {
                 num = "1";
             }
@@ -52,19 +42,9 @@ public class FightCardManager
         //补满手牌
         while (cardList.Count < 16)
         {
-            /*//随机抽一张卡
-            int tempIndex = Random.Range(0, tempList.Count);
-
-            //添加到卡堆
-            cardList.Add(tempList[tempIndex]);
-
-            //临时集合删除
-            tempList.RemoveAt(tempIndex);*/
-
-
             string num = "0";
             double temp = random.NextDouble();
-            if (temp >= 0.75)
+            if (temp >= 0.6)
             {
                 num = "1";
             }
@@ -75,7 +55,7 @@ public class FightCardManager
         //Debug.Log(cardList.Count);//输出手牌堆数量
     }
 
-    //是否满卡
+    //是否有卡
     public bool HasCard()
     {
         return cardList.Count > 0;

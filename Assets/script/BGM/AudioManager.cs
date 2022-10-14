@@ -6,6 +6,8 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
 
+    //public bool IfBeginBgmIsPlaying = false;
+
     private AudioSource bgmSource;//≤•∑≈bgmµƒ“Ù∆µ
 
     private void Awake()

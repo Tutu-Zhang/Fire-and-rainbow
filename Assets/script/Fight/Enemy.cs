@@ -5,9 +5,9 @@ using UnityEngine.UI;
 using DG.Tweening;
 public enum ActionType
 {
-    None,
     Defend,
     Attack,
+    None,
 }
 //敌人脚本
 public class Enemy : MonoBehaviour
@@ -156,8 +156,6 @@ public class Enemy : MonoBehaviour
 
     public IEnumerator DoAction()
     {
-        HideAction();
-
         //播放对应动画(可以到excel表中进行配置，这里默认播放攻击动画
         ani.Play("attack");
 
@@ -171,7 +169,7 @@ public class Enemy : MonoBehaviour
             case ActionType.Defend:
 
                 //加防御
-                Defend += 1;
+                Defend += 5;
                 UpdateDefend();
                 //可以播放对应特效
                 break;
@@ -188,6 +186,8 @@ public class Enemy : MonoBehaviour
         //等待动画播放完，这里时间也可以配置
         yield return new WaitForSeconds(1);
 
+        HideAction();
+        
         //播放待机
         ani.Play("idle");
 
@@ -197,18 +197,18 @@ public class Enemy : MonoBehaviour
     //随机设定一个敌人行动
     public void SetRandomAction()
     {
-        int ran = Random.Range(0, 3);
+        int ran = Random.Range(0, 2);
 
         type = (ActionType)ran;
 
 
         switch (type)
         {
-            case ActionType.None:
+/*            case ActionType.None:
                 //设置图标不显示
                 attackTf.gameObject.SetActive(false);
                 defendTf.gameObject.SetActive(false);
-                break;
+                break;*/
             case ActionType.Defend:
                 attackTf.gameObject.SetActive(false);
                 defendTf.gameObject.SetActive(true);

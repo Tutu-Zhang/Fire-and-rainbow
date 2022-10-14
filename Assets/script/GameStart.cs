@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 //游戏入口
 public class GameStart : MonoBehaviour
-{
+{ 
     //开始界面仅负责展示开始UI，播放BGM
     void Start()
     {
-
         //初始化音频管理器
         AudioManager.Instance.Init();
 

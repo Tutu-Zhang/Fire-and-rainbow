@@ -19,10 +19,5 @@ public class LoginUI : UIBase
 
         //加载并显示选择界面
         UIManager.Instance.ShowUI<SelectUI>("SelectUI");
-
-        //通过加载新场景实现页面跳转
-        //SceneManager.LoadScene("selectScene");
-
-
     }
 }

@@ -69,15 +69,17 @@ public class EnemyManager
     //执行仍然存活的怪物的行为
     public IEnumerator DoAllEnemyAction()
     {
-        for (int i = 0; i < enemyList.Count; i++)
-        {
-            yield return FightManager.Instance.StartCoroutine(enemyList[i].DoAction());
-        }
 
-        //行动完后更新所有敌人行为
+        //更新所有敌人行为图标
         for (int i = 0; i < enemyList.Count; i++)
         {
             enemyList[i].SetRandomAction();
+        }
+
+        //执行敌人行为
+        for (int i = 0; i < enemyList.Count; i++)
+        {
+            yield return FightManager.Instance.StartCoroutine(enemyList[i].DoAction());
         }
 
         //切换到玩家回合

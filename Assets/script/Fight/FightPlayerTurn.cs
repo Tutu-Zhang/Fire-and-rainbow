@@ -7,9 +7,7 @@ public class FightPlayerTurn : FightUnit
     public override void Init()
     {
         Debug.Log("playerTime");
-        //显示回合切换按钮
-        GameObject turnBtn = GameObject.Find("turnBtn");
-        turnBtn.SetActive(true);
+
         UIManager.Instance.ShowTip("玩家回合", Color.green, delegate ()
         {
 
@@ -29,8 +27,6 @@ public class FightPlayerTurn : FightUnit
             UIManager.Instance.GetUI<FightUI>("fightBackground").CreatCardItem (drawCardCount);//补满卡牌
             UIManager.Instance.GetUI<FightUI>("fightBackground").UpdateCardItemPos();//更新卡牌位置
 
-            //更新卡牌数
-            //UIManager.Instance.GetUI<FightUI>("FightUI").UpdateCardCount();
 
         });
     }

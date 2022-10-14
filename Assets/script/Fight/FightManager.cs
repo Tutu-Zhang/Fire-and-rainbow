@@ -31,8 +31,6 @@ public class FightManager : MonoBehaviour
     {
         MaxHP = 15;
         CurHP = 15;
-        //MaxPowerCount = 10;
-        //CurPowerCount = 10;
         DefCount = 10;
     }
 

@@ -26,8 +26,6 @@ public class CardItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, 
     private int index;
 
     //鼠标进入
-
-
     public void OnPointerEnter(PointerEventData eventData)
     {
         transform.DOScale(1.1f, 0.2f);//放大
@@ -69,16 +67,10 @@ public class CardItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, 
         //唯一的标识（不能重复）	名称	卡牌添加的脚本	卡牌类型的Id	描述	卡牌的背景图资源路径	图标资源的路径	消耗的费用	属性值	特效
         //1000	普通攻击	AttackCardItem	10001	对单个敌人进行{0}点的伤害	Icon/BlueCard	Icon/sword_03e	1	3	Effects/GreenBloodExplosion
         Debug.Log("本次抽牌第"+ num +"张牌的类型为"+data["BgIcon"]);
-
         //Transform cardArea = GameObject.Find("CardArea").transform;
         this.GetComponent<Image>().sprite = Resources.Load<Sprite>(data["BgIcon"]);
-
-
     }
 
-
-    //尝试使用卡牌
-//    public virtual bool TryUse()
 
     //创建卡牌使用后特效
     public void PlayEffect(Vector3 pos)

@@ -7,12 +7,9 @@ public class FightInit : FightUnit
     //进入该页面时调用
     public void Start()
     {
-        
+
         //初始化配置表
         GameConfigManager.Instance.Init();
-
-        //初始化牌库列表
-        //RoleManager.Instance.Init();
 
         //初始化战斗数值
         FightManager.Instance.Init();
