@@ -15,7 +15,8 @@ public class FightInit : FightUnit
         FightManager.Instance.Init();
 
         //播放战斗bgm，这里只需要输入bgm的名字就可以
-        AudioManager.Instance.PlayBGM("fightBGM");
+        if(AudioManager.Instance != null)
+            AudioManager.Instance.PlayBGM("fightBGM");
 
 
         //初始化战斗卡牌数据
