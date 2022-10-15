@@ -8,15 +8,11 @@ using UnityEngine.SceneManagement;
 public class SelectUI : UIBase
 {
     private void Awake()
-    {
-        Register("back").onClick = onSelectGameBtn;
-    }
-
-    private void onSelectGameBtn(GameObject obj, PointerEventData pData)
-    {
-        Hide();
-
-        UIManager.Instance.ShowUI<LoginUI>("LoginUI");
-
+    {             
+        if (!AudioManager.Instance.isPlayingBeginBGM)
+        {
+            Debug.Log("SelectUI²¥·ÅBGM");
+            AudioManager.Instance.PlayBGM("beginBGM");
+        }
     }
 }

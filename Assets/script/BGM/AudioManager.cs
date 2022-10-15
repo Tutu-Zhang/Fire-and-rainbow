@@ -6,9 +6,9 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
 
-    //public bool IfBeginBgmIsPlaying = false;
-
     private AudioSource bgmSource;//播放bgm的音频
+    public bool isPlayingBeginBGM;
+
 
     private void Awake()
     {
@@ -16,14 +16,17 @@ public class AudioManager : MonoBehaviour
         Debug.Log("音乐播放器已启动");
     }
 
-    public void Init()
+/*    public void Init()
     {       
-       bgmSource = gameObject.AddComponent<AudioSource>();
+       bgmSource = gameObject.GetComponent<AudioSource>();
        Debug.Log("添加音乐物体");
-    }
+    }*/
 
     public void PlayBGM(string name,bool isLoop = true)
     {
+        bgmSource = gameObject.GetComponent<AudioSource>();
+
+        Debug.Log("设置前"+isPlayingBeginBGM);
         //加载bgm声音剪辑
         AudioClip clip = Resources.Load<AudioClip>("Sound/BGM/" + name);
 
@@ -32,7 +35,16 @@ public class AudioManager : MonoBehaviour
         bgmSource.loop = isLoop;
 
         bgmSource.Play();
-        
+
+        if (name == "beginBGM")
+        {
+            isPlayingBeginBGM = true;
+        }
+        else
+        {
+            isPlayingBeginBGM = false;
+        }
+        Debug.Log("设置后"+isPlayingBeginBGM);
     }
 
     //播放音效
