@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardEffects : MonoBehaviour
+public class CardEffects
 {
     public static void MatchCard(string cardid)
     {
@@ -19,21 +19,50 @@ public class CardEffects : MonoBehaviour
                 recover_0100();
                 break;
 
+            case "0101":
+                recover_0101();
+                break;
+
             case "0110":
                 recover_0110();
+                break;
+
+            case "0111":
+                defend_0111();
                 break;
 
             case "1000":
                 attack_1000();
                 break;
 
+            case "1001":
+                attack_1001();
+                break;
+
             case "1010":
                 attack_1010();
+                break;
+
+            case "1011":
+                attack_1011();
+                break;
+
+            case "1100":
+                silence_1100();
+                break;
+
+            case "1101":
+                counter_1101();
                 break;
 
             case "1110":
                 attack_1110();
                 break;
+
+            case "1111":
+                gamble_1111();
+                break;
+
         }
     }
 
@@ -55,6 +84,11 @@ public class CardEffects : MonoBehaviour
         FightManager.Instance.GetRecover(4);
     }
 
+    public static void recover_0101()
+    {
+        UIManager.Instance.GetUI<FightUI>("fightBackground").addBuff("0101", 3);
+    }
+
     public static void recover_0110()
     {
         FightManager.Instance.GetRecover(4);
@@ -67,10 +101,22 @@ public class CardEffects : MonoBehaviour
         }
     }
 
+    public static void defend_0111()
+    {
+        UIManager.Instance.GetUI<FightUI>("fightBackground").addBuff("0111", 3);
+    }
+
     public static void attack_1000()
     {
         FightManager.Instance.Attack_Enemy(4);
     }
+
+    public static void attack_1001()
+    {
+        FightManager.Instance.Attack_Enemy(2);
+        UIManager.Instance.GetUI<FightUI>("fightBackground").addBuff("1001", 3);
+    }
+
 
     public static void attack_1010()
     {
@@ -82,6 +128,21 @@ public class CardEffects : MonoBehaviour
         {
             FightManager.Instance.Attack_Enemy(3);
         }
+    }
+
+    public static void attack_1011()
+    {
+        UIManager.Instance.GetUI<FightUI>("fightBackground").addBuff("1011", 3);
+    }
+
+    public static void silence_1100()
+    {
+        UIManager.Instance.GetUI<FightUI>("fightBackground").addBuff("1100", 1);
+    }
+
+    public static void counter_1101()
+    {
+        UIManager.Instance.GetUI<FightUI>("fightBackground").addBuff("1101", 3);
     }
 
     public static void attack_1110()
@@ -99,6 +160,10 @@ public class CardEffects : MonoBehaviour
         }
     }
 
+    public static void gamble_1111()
+    {
+        UIManager.Instance.GetUI<FightUI>("fightBackground").addBuff("1111", 100);
+    }
 
 
 }

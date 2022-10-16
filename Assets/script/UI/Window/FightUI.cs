@@ -21,12 +21,14 @@ public class FightUI : UIBase
 
     private List<CardItem> cardItemList; //手牌区集合
     private List<CardItem> PlayCardList; //出牌区集合
+    private List<BuffItem> BuffList; //牌局中Buff集合，由于不存在玩家对打，所以敌人buff和自己的buff都在里面
 
     Button turnBtn, UseBtn;
     private void Awake()
     {
         cardItemList = new List<CardItem>();
         PlayCardList = new List<CardItem>();
+        BuffList = new List<BuffItem>();
     }
 
     //玩家回合结束，切换到敌人回合
@@ -41,6 +43,7 @@ public class FightUI : UIBase
         Debug.Log("回合切换");
     }
 
+    //打出卡
     private void UseCard()
     {
         string cardId = "";
@@ -56,6 +59,24 @@ public class FightUI : UIBase
 
     }
 
+    //寻找buff列表中是否有buffid为参数的buff
+    public BuffItem FindBuff(string id)
+    {
+        if (BuffList.Count != 0)
+        {
+            for (int i = 0; i < BuffList.Count; i++)
+            {
+                if (BuffList[i].GetBuffId() == id)
+                {
+                    return BuffList[i];
+                }
+            }
+            return null;
+        }
+        else
+            return null;
+    }
+
     private void Start()
     {
 
@@ -69,6 +90,7 @@ public class FightUI : UIBase
         cardZone = transform.Find("CardZone").gameObject;
         cardArea = transform.Find("CardArea").gameObject;
         turnBtn = GameObject.Find("turnBtn").GetComponent<Button>();
+        turnBtn.gameObject.SetActive(false);
         UseBtn = GameObject.Find("UseBtn").GetComponent<Button>();
         UseBtn.gameObject.SetActive(false);
 
@@ -92,26 +114,12 @@ public class FightUI : UIBase
         hpImage.fillAmount = (float)FightManager.Instance.CurHP / (float)FightManager.Instance.MaxHP;
     }
 
-/*    public void UpdatePower()
-    {
-        //我们好像没有法力值这个东西
-        powerText.text = FightManager.Instance.CurPowerCount + "/" + FightManager.Instance.MaxPowerCount;
-    }*/
 
     public void UpdateDef()
     {
         defText.text = FightManager.Instance.DefCount.ToString();
     }
 
-/*    public void UpdateCardCount()
-    {
-        cardCountText.text = FightCardManager.Instance.cardList.Count.ToString();
-    }*/
-
-/*    public void UpdateUsedCardCount()
-    {
-        noCardCountText.text = FightCardManager.Instance.usedCardList.Count.ToString();
-    }*/
 
     //创建卡牌物体
     public void CreatCardItem(int count)
@@ -137,10 +145,53 @@ public class FightUI : UIBase
         }
     }
 
-    //更新卡牌位置
+
+    //下面的两个addBuff都是向bufflist添加buff，区别仅在于接受的参数不同
+    public void addBuff(BuffItem item)
+    {
+        if (FindBuff(item.GetBuffId()))
+        {
+            FindBuff(item.GetBuffId()).AddLeftTime(item.GetLeftTime());
+        }
+        else
+            BuffList.Add(item);
+
+        for(int i = 0;i < BuffList.Count; i++)
+        {
+            Debug.Log("目前有buff:" + BuffList[i]);
+        }
+    }
+
+    public void addBuff(string id, int left_time)
+    {
+
+        //buff.Init("0101", 3);
+
+        if (FindBuff(id))
+        {
+            FindBuff(id).AddLeftTime(left_time);
+        }
+        else
+        {
+            GameObject obj = new GameObject("buff" + id);
+            BuffItem buff = obj.AddComponent<BuffItem>();
+            buff.Init(id, left_time);
+            BuffList.Add(buff);
+        }
+
+
+        for (int i = 0; i < BuffList.Count; i++)
+        {
+            Debug.Log("目前有buff:" + BuffList[i].GetBuffId());
+        }
+    }
+
+
+
+    //更新手牌位置
     public void UpdateCardItemPos()
     {
-        Debug.Log("更新卡牌位置");
+        Debug.Log("更新手牌位置");
         for(int i = 0; i < cardItemList.Count; i++)
         {
             Transform card = cardItemList[i].transform;
@@ -150,6 +201,7 @@ public class FightUI : UIBase
      
     }
 
+    //更新出牌区位置
     public void UpdatePlayCardPos()
     {
         Debug.Log("更新上方牌区位置");
@@ -166,6 +218,7 @@ public class FightUI : UIBase
             UseBtn.gameObject.SetActive(false);
     }
 
+    //以下两个函数如名
     public bool MoveCardToPlayArea(CardItem card)
     {
         CardItem nowcard = card;
@@ -230,7 +283,24 @@ public class FightUI : UIBase
 
         Destroy(item.gameObject,1);
 
+    }
 
+    //清除一个在list中的buff
+    public void RemoveBuff(BuffItem item)
+    {
+        item.enabled = false;
+        BuffList.Remove(item);
+
+        Destroy(item.gameObject);
+    }
+
+    //让所有的buff剩余轮次减一
+    public void BuffPassTurn()
+    {
+        for(int i = 0; i < BuffList.Count; i++)
+        {
+            BuffList[i].PassTurn();
+        }
     }
 
     //清空所有卡牌

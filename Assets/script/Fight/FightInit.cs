@@ -31,6 +31,7 @@ public class FightInit : FightUnit
 
         //切换到玩家回合
         FightManager.Instance.ChangeType(FightType.Player);
+        //FightManager.Instance.GetPlayHit(15);
     }
 
     public override void OnUpdate()

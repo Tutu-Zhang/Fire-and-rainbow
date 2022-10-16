@@ -70,6 +70,26 @@ public class EnemyManager
     public IEnumerator DoAllEnemyAction()
     {
 
+        if (UIManager.Instance.GetUI<FightUI>("fightBackground").FindBuff("1001") != null)
+        {
+            BuffEffects.MatchBuff("1001");
+        }
+
+        if (UIManager.Instance.GetUI<FightUI>("fightBackground").FindBuff("1011") != null)
+        {
+            BuffEffects.MatchBuff("1011");
+        }
+
+        if (UIManager.Instance.GetUI<FightUI>("fightBackground").FindBuff("1100") != null)
+        {
+            if (BuffEffects.buff_silence_1100())
+            {
+                FightManager.Instance.ChangeType(FightType.Player);
+                yield break;
+            }
+            
+        }
+
         //更新所有敌人行为图标
         for (int i = 0; i < enemyList.Count; i++)
         {
@@ -81,6 +101,7 @@ public class EnemyManager
         {
             yield return FightManager.Instance.StartCoroutine(enemyList[i].DoAction());
         }
+
 
         //切换到玩家回合
         FightManager.Instance.ChangeType(FightType.Player);

@@ -9,22 +9,20 @@ public class FightEnemyTurn : FightUnit
         //删除所有卡牌(我们不需要显示删除卡牌
         //UIManager.Instance.GetUI<FightUI>("FightUI").RemoveAllCards();
 
-        GameObject turnBtn = GameObject.Find("turnBtn");
-        turnBtn.SetActive(false);
+        FightManager.Instance.SetBtn(false); //关掉结束回合按钮
+
         //显示敌人回合提示
         UIManager.Instance.ShowTip("敌人回合", Color.red, delegate ()
         {
-            //隐藏回合切换按钮
-
-            
             FightManager.Instance.StartCoroutine(EnemyManager.Instance.DoAllEnemyAction());
 
-            //显示回合切换按钮
-            turnBtn.SetActive(true);
-
+            //btn不该在turn内获取，现在改到fightmanager了
         });
 
+
     }
+
+
 
     public override void OnUpdate()
     {

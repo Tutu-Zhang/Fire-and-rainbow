@@ -7,6 +7,7 @@ public class FightPlayerTurn : FightUnit
     public override void Init()
     {
         Debug.Log("playerTime");
+        //FightManager.Instance.SetBtn(false);
 
         UIManager.Instance.ShowTip("玩家回合", Color.green, delegate ()
         {
@@ -19,6 +20,14 @@ public class FightPlayerTurn : FightUnit
                 //UIManager.Instance.GetUI<FightUI>("FightUI").UpdateCardCount();
             }
 
+            //回合前就执行效果的判定阶段,对于玩家,只有0101
+            //BuffItem buff_1 = UIManager.Instance.GetUI<FightUI>("fightBackground").FindBuff("0101");
+            if (UIManager.Instance.GetUI<FightUI>("fightBackground").FindBuff("0101") != null)
+            {
+                BuffEffects.MatchBuff("0101");
+            }
+            
+
 
             //抽牌
 
@@ -26,6 +35,8 @@ public class FightPlayerTurn : FightUnit
             //Debug.Log(drawCardCount);//已经修改为补满牌
             UIManager.Instance.GetUI<FightUI>("fightBackground").CreatCardItem (drawCardCount);//补满卡牌
             UIManager.Instance.GetUI<FightUI>("fightBackground").UpdateCardItemPos();//更新卡牌位置
+
+            FightManager.Instance.SetBtn(true);
 
 
         });

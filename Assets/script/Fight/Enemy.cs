@@ -160,7 +160,7 @@ public class Enemy : MonoBehaviour
         ani.Play("attack");
 
         //等待一段时间后执行行为
-        yield return new WaitForSeconds(0.5f);//等待0.5秒
+        yield return new WaitForSeconds(1f);//等待1秒
 
         switch (type)
         {
