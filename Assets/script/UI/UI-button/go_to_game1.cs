@@ -15,5 +15,6 @@ public class go_to_game1 : MonoBehaviour
     private void GotoNew()
     {
         SceneManager.LoadScene("game1");
+        LevelManager.Instance.level = 1;
     }
 }

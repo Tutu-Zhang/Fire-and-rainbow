@@ -8,11 +8,12 @@ using UnityEngine.SceneManagement;
 public class SelectUI : UIBase
 {
     private void Awake()
-    {             
-        if (!AudioManager.Instance.isPlayingBeginBGM)
-        {
-            Debug.Log("SelectUI²¥·ÅBGM");
-            AudioManager.Instance.PlayBGM("beginBGM");
-        }
+    {
+        if (AudioManager.Instance != null)
+            if (!AudioManager.Instance.isPlayingBeginBGM)
+            {
+                Debug.Log("SelectUI²¥·ÅBGM");
+                AudioManager.Instance.PlayBGM("beginBGM");
+            }
     }
 }

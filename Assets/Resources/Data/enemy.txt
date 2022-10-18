@@ -1,5 +1,7 @@
 Id	Name	Hp	Attack	Defend	Model
 Id	名字	血量	攻击力	防御盾	怪物的模型路径
-10001	史莱姆	10	8	5	EnemyModel/level1/enemyWaiting
-10002	石头人	10	5	3	Model/Golem
-10003	乌龟	5	5	2	Model/TurtleShell
+10000	赛博猎犬	10	5	5	EnemyModel/level0/EnemyWaiting
+10001	打交小兵	10	8	5	EnemyModel/level1/EnemyWaiting
+10002	拳头哥	10	5	3	EnemyModel/level2/EnemyWaiting
+10003	刀哥	5	5	2	EnemyModel/level3/EnemyWaiting
+10004	猎天使	10	8	5	EnemyModel/level4/EnemyWaiting

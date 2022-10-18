@@ -43,10 +43,13 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        _meshRenderer = transform.GetComponentInChildren<SkinnedMeshRenderer>();//好像是获取轮廓？
-        ani = transform.GetComponent<Animator>();//用于播放动画，如受伤
+        //_meshRenderer = transform.GetComponentInChildren<SkinnedMeshRenderer>();//好像是获取轮廓？
+        GameObject enemy = GameObject.Find("EnemyWaiting(Clone)");       
+        ani = enemy.GetComponent<Animator>();//获取动画控件
 
+        Debug.Log(ani);
         type = ActionType.None;
+
         //加载敌人血条和行动图标
         hpItemObj = UIManager.Instance.CreateEnemyHpItem();
         actionObj = UIManager.Instance.CreateActionIcon();
@@ -55,7 +58,7 @@ public class Enemy : MonoBehaviour
         attackTf = actionObj.transform.Find("atk");
         defendTf = actionObj.transform.Find("def");
 
-        defText = actionObj.transform.Find("DefText").GetComponent<Text>();//找到组件中的防御力数值
+        defText = hpItemObj.transform.Find("EnemyDEFText").GetComponent<Text>();//找到组件中的防御力数值
         hpText = hpItemObj.transform.Find("EnemyHPText").GetComponent<Text>();
         hpImg = hpItemObj.transform.Find("EnemyHPFill").GetComponent<Image>();//找到血条图标
 
@@ -108,13 +111,17 @@ public class Enemy : MonoBehaviour
     //受伤
     public void Hited(int val)
     {
+        ani.SetBool("isHitted", true);
+        Invoke("SetisHittedToFalse", 0.3f);
+
+
         //先扣护盾
-        if(Defend >= val)
+        if (Defend >= val)
         {
             Defend -= val;
 
             //受伤动画
-            ani.Play("Hited", 0, 0);
+            //ani.SetBool("isHitted", true);
             UpdateDefend();
         }
         else //再扣血量
@@ -138,13 +145,20 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                ani.Play("Hited", 0, 0);
+                //ani.SetBool("isHitted", true);               
             }
 
             //刷新血量等UI
             UpdateDefend();
             UpdateHp();
         }
+        
+    }
+
+    //用于延迟触发
+    public void SetisHittedToFalse()
+    {
+        ani.SetBool("isHitted", false);
     }
 
     //隐藏怪物头上的行动标志
@@ -157,7 +171,7 @@ public class Enemy : MonoBehaviour
     public IEnumerator DoAction()
     {
         //播放对应动画(可以到excel表中进行配置，这里默认播放攻击动画
-        ani.Play("attack");
+        
 
         //等待一段时间后执行行为
         yield return new WaitForSeconds(1f);//等待1秒
@@ -175,16 +189,16 @@ public class Enemy : MonoBehaviour
                 break;
             case ActionType.Attack:
 
+                ani.SetBool("isAttacking", true);              
+                //等待攻击动画播放完，这里时间也可以配置
+                yield return new WaitForSeconds(1);
+                //摄像机抖动(现在不抖动
+                Camera.main.DOShakePosition(0.1f, 0f, 5, 45);
                 //玩家扣血
                 FightManager.Instance.GetPlayHit(Attack);
-
-                //摄像机抖动
-                Camera.main.DOShakePosition(0.1f, 0.2f, 5, 45);
+                ani.SetBool("isAttacking", false);
                 break;
         }
-
-        //等待动画播放完，这里时间也可以配置
-        yield return new WaitForSeconds(1);
 
         HideAction();
         
@@ -199,8 +213,9 @@ public class Enemy : MonoBehaviour
     {
         int ran = Random.Range(0, 2);
 
-        type = (ActionType)ran;
+        //type = (ActionType)ran;
 
+        type = ActionType.Attack;
 
         switch (type)
         {

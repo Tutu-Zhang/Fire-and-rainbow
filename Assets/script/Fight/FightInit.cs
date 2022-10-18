@@ -15,7 +15,7 @@ public class FightInit : FightUnit
         FightManager.Instance.Init();
 
         //播放战斗bgm，这里只需要输入bgm的名字就可以
-        if(AudioManager.Instance != null)
+        if (AudioManager.Instance != null)
             AudioManager.Instance.PlayBGM("fightBGM");
 
 
@@ -24,18 +24,16 @@ public class FightInit : FightUnit
 
         //加载战斗元素
         UIManager.Instance.ShowUI<FightUI>("fightBackground");
-        //UIManager.Instance.ShowUI<LoginUI>("LoginUI");
 
-        //加载敌人资源
+        //加载关卡资源
         EnemyManager.Instance.loadRes("10001");
 
         //切换到玩家回合
         FightManager.Instance.ChangeType(FightType.Player);
-        //FightManager.Instance.GetPlayHit(15);
     }
 
     public override void OnUpdate()
     {
-        
+
     }
 }

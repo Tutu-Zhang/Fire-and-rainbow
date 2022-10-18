@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
     private AudioSource bgmSource;//≤•∑≈bgmµƒ“Ù∆µ
     public bool isPlayingBeginBGM;
 
+    
 
     private void Awake()
     {

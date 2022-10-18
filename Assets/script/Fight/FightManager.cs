@@ -30,6 +30,7 @@ public class FightManager : MonoBehaviour
     public int TurnCount;//回合数,这个回合数是每到玩家回合加一次的
 
 
+
     private void Start()
     {
         turnBtn = GameObject.Find("turnBtn");
@@ -137,6 +138,7 @@ public class FightManager : MonoBehaviour
 
     public void Attack_Enemy(int val)
     {
+        
         int gamble = 1;
         if (UIManager.Instance.GetUI<FightUI>("fightBackground").FindBuff("1111") != null)
         {
