@@ -15,6 +15,7 @@ public class GameConfigManager
 
     private GameConfigData cardTypeData;
 
+    private GameConfigData playerSkill;
 
     private TextAsset textAsset;
 
@@ -33,6 +34,9 @@ public class GameConfigManager
 
         textAsset = Resources.Load<TextAsset>("Data/cardType");
         cardTypeData = new GameConfigData(textAsset.text);
+
+        textAsset = Resources.Load<TextAsset>("Data/playerSkill");
+        playerSkill = new GameConfigData(textAsset.text);
     }
 
     public List<Dictionary<string,string>> GetCardLines()
@@ -68,4 +72,8 @@ public class GameConfigManager
         return cardTypeData.GetOneById(id);
     }
 
+    public Dictionary<string, string> GetPlayerSkillsById(string id)
+    {
+        return playerSkill.GetOneById(id);
+    }
 }

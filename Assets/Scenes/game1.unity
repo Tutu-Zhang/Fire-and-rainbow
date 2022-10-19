@@ -375,6 +375,7 @@ MonoBehaviour:
   fightUnit: {fileID: 0}
   MaxHP: 0
   CurHP: 0
+  turnCount: 0
   DefCount: 0
   TurnCount: 0
 --- !u!114 &893516751

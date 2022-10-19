@@ -18,6 +18,7 @@ public class FightUI : UIBase
     private GameObject playCardZone;
     private GameObject cardZone;
     private GameObject cardArea;
+    private String skillText = "技能描述";
 
     private List<CardItem> cardItemList; //手牌区集合
     private List<CardItem> PlayCardList; //出牌区集合
@@ -57,6 +58,38 @@ public class FightUI : UIBase
         RemoveAllCards(true);//为true时为移除出牌区卡片，false时移除手牌区
         CardEffects.MatchCard(cardId); //Matchcard顺便就执行卡的效果
 
+
+        Dictionary<string, string> enemyData = GameConfigManager.Instance.GetPlayerSkillsById("00001");
+    }
+
+    //显示卡牌效果
+    private void ShowSkillText()
+    {
+        string cardId = "";
+        for (int i = 0; i < PlayCardList.Count; i++)
+        {
+            cardId = cardId + PlayCardList[i].GetCardNum().ToString();
+        }
+
+        
+        Dictionary<string, string> skillData = GameConfigManager.Instance.GetPlayerSkillsById("00001");
+
+        GameObject obj = GameObject.FindGameObjectWithTag("SkillDes");
+
+        skillText = skillData[cardId];
+
+        obj.GetComponent<Text>().text = cardId + ":"+ skillText;
+
+        skillText = "技能描述";
+
+    }
+
+    //隐藏卡牌效果
+    private void HideSkillText()
+    {
+        GameObject obj = GameObject.FindGameObjectWithTag("SkillDes");
+
+        obj.GetComponent<Text>().text = skillText;
     }
 
     //寻找buff列表中是否有buffid为参数的buff
@@ -213,9 +246,15 @@ public class FightUI : UIBase
         }
 
         if (PlayCardList.Count == 4)
+        {
+            ShowSkillText();
             UseBtn.gameObject.SetActive(true);
+        }
         else
+        {
+            HideSkillText();
             UseBtn.gameObject.SetActive(false);
+        }               
     }
 
     //以下两个函数如名

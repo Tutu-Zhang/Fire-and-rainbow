@@ -9,7 +9,7 @@ public class SelectUI : UIBase
 {
     private void Awake()
     {
-        if (AudioManager.Instance != null)
+        //if (AudioManager.Instance != null)
             if (!AudioManager.Instance.isPlayingBeginBGM)
             {
                 Debug.Log("SelectUI²¥·ÅBGM");

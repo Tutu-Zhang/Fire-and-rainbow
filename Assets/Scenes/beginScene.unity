@@ -135,7 +135,6 @@ GameObject:
   - component: {fileID: 185196415}
   - component: {fileID: 185196414}
   - component: {fileID: 185196413}
-  - component: {fileID: 185196412}
   - component: {fileID: 185196411}
   - component: {fileID: 185196417}
   - component: {fileID: 185196418}
@@ -156,18 +155,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1fd7cf2c0c68fd5489b8992d1bb9e442, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &185196412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 185196410}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 878e347de282e4c439154e1dda9c1fc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &185196413
@@ -370,9 +357,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 481018696}
+  - component: {fileID: 481018698}
+  - component: {fileID: 481018697}
   m_Layer: 0
   m_Name: LeveManager
-  m_TagString: Untagged
+  m_TagString: level
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -391,6 +380,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &481018697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 481018695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eea7f4560d70d9d42ae6f166351e774a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 0
+--- !u!114 &481018698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 481018695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea08762aad263444da9cb4598a0f16f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -787,6 +801,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LoginUI
       objectReference: {fileID: 0}
+    - target: {fileID: 2772031065595781576, guid: 4aae05eaaafcbf0438e320367ac87b3a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4432752482417324584, guid: 4aae05eaaafcbf0438e320367ac87b3a, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -871,7 +889,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2772031065595781576, guid: 4aae05eaaafcbf0438e320367ac87b3a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4aae05eaaafcbf0438e320367ac87b3a, type: 3}
 --- !u!1 &1352081879 stripped
 GameObject:

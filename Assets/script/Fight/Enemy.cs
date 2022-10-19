@@ -12,6 +12,7 @@ public enum ActionType
 //敌人脚本
 public class Enemy : MonoBehaviour
 {
+    public static Enemy Instance = new Enemy();
     protected Dictionary<string, string> data;//敌人数据表信息
 
     public ActionType type;
@@ -43,6 +44,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        Instance = this;
         //_meshRenderer = transform.GetComponentInChildren<SkinnedMeshRenderer>();//好像是获取轮廓？
         GameObject enemy = GameObject.Find("EnemyWaiting(Clone)");       
         ani = enemy.GetComponent<Animator>();//获取动画控件
@@ -85,6 +87,11 @@ public class Enemy : MonoBehaviour
     //更新敌人血量
     public void UpdateHp()
     {
+        if (CurHp > MaxHp)
+        {
+            CurHp = MaxHp;
+        }
+
         hpText.text = CurHp + "/" + MaxHp;
         hpImg.fillAmount = (float)CurHp / (float)MaxHp;
     }
@@ -170,41 +177,26 @@ public class Enemy : MonoBehaviour
 
     public IEnumerator DoAction()
     {
-        //播放对应动画(可以到excel表中进行配置，这里默认播放攻击动画
         
-
-        //等待一段时间后执行行为
-        yield return new WaitForSeconds(1f);//等待1秒
-
-        switch (type)
+        switch (LevelManager.Instance.level)
         {
-            case ActionType.None:
-                break;
-            case ActionType.Defend:
 
-                //加防御
-                Defend += 5;
-                UpdateDefend();
-                //可以播放对应特效
+            case 0:
+                yield return EnemySkill.Instance.EnemyActio0(this,type);
                 break;
-            case ActionType.Attack:
-
-                ani.SetBool("isAttacking", true);              
-                //等待攻击动画播放完，这里时间也可以配置
-                yield return new WaitForSeconds(1);
-                //摄像机抖动(现在不抖动
-                Camera.main.DOShakePosition(0.1f, 0f, 5, 45);
-                //玩家扣血
-                FightManager.Instance.GetPlayHit(Attack);
-                ani.SetBool("isAttacking", false);
+            case 1:
+                yield return EnemySkill.Instance.EnemyActio1(this,type, CurHp);
                 break;
+            case 2:
+                yield return EnemySkill.Instance.EnemyActio2(this, type);
+                break;
+            case 3:
+                yield return EnemySkill.Instance.EnemyActio3(this, type);
+                break;
+/*            case 4:
+                yield return EnemySkill.Instance.EnemyActio4();
+                break;*/
         }
-
-        HideAction();
-        
-        //播放待机
-        ani.Play("idle");
-
     }
 
 
@@ -213,9 +205,9 @@ public class Enemy : MonoBehaviour
     {
         int ran = Random.Range(0, 2);
 
-        //type = (ActionType)ran;
+        type = (ActionType)ran;
 
-        type = ActionType.Attack;
+        //type = ActionType.Attack;
 
         switch (type)
         {

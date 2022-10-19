@@ -23,6 +23,8 @@ public class FightManager : MonoBehaviour
     public int MaxHP;
     public int CurHP;
 
+    public int turnCount = 0;
+
     //public int MaxPowerCount;//最大能量（好像用不到
     //public int CurPowerCount;//当前能量
     public int DefCount;//护甲
