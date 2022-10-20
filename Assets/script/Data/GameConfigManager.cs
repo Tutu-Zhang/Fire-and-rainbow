@@ -17,6 +17,10 @@ public class GameConfigManager
 
     private GameConfigData playerSkill;
 
+    private GameConfigData DialogueBeforeData;
+
+    private GameConfigData CGBeforeData;
+
     private TextAsset textAsset;
 
     //初始化配置文件（txt 存储到内存中）
@@ -37,6 +41,12 @@ public class GameConfigManager
 
         textAsset = Resources.Load<TextAsset>("Data/playerSkill");
         playerSkill = new GameConfigData(textAsset.text);
+
+        textAsset = Resources.Load<TextAsset>("Data/DialogueBefore");
+        DialogueBeforeData = new GameConfigData(textAsset.text);
+
+        textAsset = Resources.Load<TextAsset>("Data/CGBefore");
+        CGBeforeData = new GameConfigData(textAsset.text);
     }
 
     public List<Dictionary<string,string>> GetCardLines()
@@ -53,6 +63,19 @@ public class GameConfigManager
     {
         return levelData.GetLines();
     }
+
+    public List<Dictionary<string, string>> GetDialogueBeforeDatas()
+    {
+        return DialogueBeforeData.GetLines();
+    }
+
+    public List<Dictionary<string, string>> GetCGBeforeData()
+    {
+        return CGBeforeData.GetLines();
+    }
+
+
+
 
     public Dictionary<string,string> GetCardById(string id)
     {
@@ -75,5 +98,15 @@ public class GameConfigManager
     public Dictionary<string, string> GetPlayerSkillsById(string id)
     {
         return playerSkill.GetOneById(id);
+    }
+
+    public Dictionary<string, string> GetDialogueBeforeDataById(string id)
+    {
+        return DialogueBeforeData.GetOneById(id);
+    }
+
+    public Dictionary<string, string> GetCGBeforeDataByid(string id)
+    {
+        return CGBeforeData.GetOneById(id);
     }
 }

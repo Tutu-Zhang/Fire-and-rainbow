@@ -40,12 +40,13 @@ public class GameConfigData
     }
 
     public Dictionary<string,string> GetOneById(string id)
-    {
+    { 
         for (int i = 0; i < dataDic.Count; i++)
         {
             Dictionary<string, string> dic = dataDic[i];
             if (dic["Id"] == id)
             {
+                
                 return dic;
             }
             

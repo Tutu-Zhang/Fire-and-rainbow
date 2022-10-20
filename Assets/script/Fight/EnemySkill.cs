@@ -208,9 +208,73 @@ public class EnemySkill : MonoBehaviour
         enemyInstance.HideAction();
     }
 
-/*    public IEnumerator EnemyActio4()
+    //天使：若天使护甲值不为0，造成固定伤害；若护甲值为0，且玩家血量>1，则将玩家打到1点血(50%概率发动)或是造成固定伤害（50%概率发动）；若玩家血量=1，则造成固定伤害（击杀玩家
+    public IEnumerator EnemyActio4(Enemy enemyInstance, ActionType typeIn)
     {
+        //获取敌人动画控件
+        GameObject enemy = GameObject.Find("EnemyWaiting(Clone)");
+        ani = enemy.GetComponent<Animator>();
 
+        //等待一段时间后执行行为
+        yield return new WaitForSeconds(0.5f);//等待0.5秒
+
+        if (enemyInstance.ifLv4BossConsumeLives)
+        {
+            enemyInstance.Defend += 5;
+            enemyInstance.CurHp += enemyInstance.MaxHp;
+            enemyInstance.UpdateDefend();
+            enemyInstance.UpdateHp();
+
+            enemyInstance.ifLv4BossConsumeLives = false;
+            typeIn = ActionType.Attack;
+        }
+
+        switch (typeIn)
+        {
+            case ActionType.Defend:
+                enemyInstance.Defend += 5;
+                enemyInstance.CurHp += 5;
+                enemyInstance.UpdateDefend();
+                enemyInstance.UpdateHp();
+                break;
+
+            case ActionType.Attack:
+                ani.SetBool("isAttacking", true);
+                //等待攻击动画播放完，这里时间也可以配置
+                yield return new WaitForSeconds(1);
+                //摄像机抖动(现在不抖动
+                Camera.main.DOShakePosition(0.1f, 0f, 5, 45);
+                
+
+                if (enemyInstance.Defend >= 0)
+                {
+                    //玩家扣血
+                    FightManager.Instance.GetPlayHit(enemyInstance.Attack);
+                }
+                else
+                {
+                    if (FightManager.Instance.CurHP > 1)
+                    {
+                        int ran = Random.Range(0, 1);
+
+                        if (ran > 0.5)
+                        {
+                            FightManager.Instance.GetPlayHit(FightManager.Instance.CurHP - 1);
+                        }
+                        else
+                        {
+                            FightManager.Instance.GetPlayHit(enemyInstance.Attack);
+                        }
+                    }
+                    else
+                    {
+                        FightManager.Instance.GetPlayHit(enemyInstance.Attack);
+                    }
+                }
+
+                ani.SetBool("isAttacking", false);
+                break;
+        }
     }
-*/
+
 }

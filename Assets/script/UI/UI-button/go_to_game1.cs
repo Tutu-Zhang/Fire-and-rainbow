@@ -16,6 +16,6 @@ public class go_to_game1 : MonoBehaviour
     {
         LevelManager.Instance.level = 1;
 
-        SceneManager.LoadScene("game1");
+        SceneManager.LoadScene("BeforeGame");
     }
 }

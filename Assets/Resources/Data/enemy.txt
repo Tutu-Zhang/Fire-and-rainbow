@@ -2,6 +2,6 @@ Id	Name	Hp	Attack	Defend	Model
 Id	名字	血量	攻击力	防御盾	怪物的模型路径
 10000	赛博猎犬	10	5	5	EnemyModel/level0/EnemyWaiting
 10001	打交小兵	10	5	10	EnemyModel/level1/EnemyWaiting
-10002	拳头哥	30	5	5	EnemyModel/level2/EnemyWaiting
+10002	拳头哥	30	2	5	EnemyModel/level2/EnemyWaiting
 10003	刀哥	10	5	20	EnemyModel/level3/EnemyWaiting
-10004	猎天使	10	8	5	EnemyModel/level4/EnemyWaiting
+10004	猎天使	20	5	20	EnemyModel/level4/EnemyWaiting

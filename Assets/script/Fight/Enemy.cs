@@ -32,6 +32,8 @@ public class Enemy : MonoBehaviour
     public int Attack;
     public int MaxHp;
     public int CurHp;
+    public int Lv4BossLives = 3;
+    public bool ifLv4BossConsumeLives = false;
 
     //组件相关
     SkinnedMeshRenderer _meshRenderer;
@@ -138,21 +140,36 @@ public class Enemy : MonoBehaviour
             CurHp -= val;
             if (CurHp <= 0 )
             {
-                CurHp = 0;
-                //播放死亡
-                ani.Play("die");
+                //第四关boss有三条命
+                if (LevelManager.Instance.level == 4 && Lv4BossLives > 0)
+                {
+                    CurHp = 1;
+                    Defend += 100;
+                    Lv4BossLives -= 1;
 
-                //敌人从列表中移除
-                EnemyManager.Instance.DeleteEnemy(this);
+                    UpdateHp();
+                    UpdateDefend();
+                    ifLv4BossConsumeLives = true;
+                }
+                else
+                {
+                    CurHp = 0;
+                    //播放死亡
+                    ani.Play("die");
 
-                //删除敌人的模型
-                Destroy(gameObject, 1);
-                Destroy(actionObj);
-                Destroy(hpItemObj);
+                    //敌人从列表中移除
+                    EnemyManager.Instance.DeleteEnemy(this);
+
+                    //删除敌人的模型
+                    Destroy(gameObject, 1);
+                    Destroy(actionObj);
+                    Destroy(hpItemObj);
+                }
+
             }
             else
             {
-                //ani.SetBool("isHitted", true);               
+                ani.SetBool("isHitted", true);               
             }
 
             //刷新血量等UI
@@ -193,9 +210,9 @@ public class Enemy : MonoBehaviour
             case 3:
                 yield return EnemySkill.Instance.EnemyActio3(this, type);
                 break;
-/*            case 4:
-                yield return EnemySkill.Instance.EnemyActio4();
-                break;*/
+            case 4:
+                yield return EnemySkill.Instance.EnemyActio4(this, type);
+                break;
         }
     }
 

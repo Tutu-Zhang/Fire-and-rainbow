@@ -46,6 +46,8 @@ public class FightInit : FightUnit
                 break;
         }
 
+        //EnemyManager.Instance.loadRes("10004");
+
         //切换到玩家回合
         FightManager.Instance.ChangeType(FightType.Player);
     }

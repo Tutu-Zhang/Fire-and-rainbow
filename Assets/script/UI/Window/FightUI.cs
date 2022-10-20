@@ -59,7 +59,7 @@ public class FightUI : UIBase
         CardEffects.MatchCard(cardId); //Matchcard顺便就执行卡的效果
 
 
-        Dictionary<string, string> enemyData = GameConfigManager.Instance.GetPlayerSkillsById("00001");
+        //Dictionary<string, string> enemyData = GameConfigManager.Instance.GetPlayerSkillsById("00001");
     }
 
     //显示卡牌效果

@@ -80,7 +80,7 @@ public class BuffEffects
     {
         System.Random random = new System.Random();
         double temp = random.NextDouble();
-        if (temp >= 0.3)
+        if (temp >= 0.7)
         {
             Debug.Log("跳过敌方回合");
             return true;
