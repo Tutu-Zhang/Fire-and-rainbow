@@ -9,6 +9,12 @@ TagManager:
   - SkillDes
   - DialogueBackground
   - DialogueText
+  - WinWindow
+  - LoseWindow
+  - WinGTL
+  - WinGTS
+  - LoseGTL
+  - LoseGTS
   layers:
   - Default
   - TransparentFX

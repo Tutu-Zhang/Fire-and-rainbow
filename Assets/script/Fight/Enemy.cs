@@ -154,8 +154,7 @@ public class Enemy : MonoBehaviour
                 else
                 {
                     CurHp = 0;
-                    //播放死亡
-                    ani.Play("die");
+
 
                     //敌人从列表中移除
                     EnemyManager.Instance.DeleteEnemy(this);

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class StoryManager : MonoBehaviour
+public class LetterManager : MonoBehaviour
 {
     private int levelCount;
 
@@ -27,7 +27,7 @@ public class StoryManager : MonoBehaviour
 
         //改变背景图物体
         BackgroundImg = GameObject.FindGameObjectWithTag("DialogueBackground").GetComponent<Image>();
-        imgPath = "UI-img/CG/" + levelCount.ToString() + "before";
+        imgPath = "UI-img/CG/" + levelCount.ToString() + "after";
         Debug.Log(imgPath);
         Texture2D texture = Resources.Load<Texture2D>(imgPath);
         Sprite sp = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
@@ -36,7 +36,7 @@ public class StoryManager : MonoBehaviour
 
         //获取旁白物体
         dialogueText = GameObject.FindGameObjectWithTag("DialogueText");
-        DialogueData = GameConfigManager.Instance.GetDialogueBeforeDataById(levelCount.ToString());
+        DialogueData = GameConfigManager.Instance.GetDialogueAfterDataById(levelCount.ToString());
         MaxCount = int.Parse(DialogueData["count"]);
         ChangeDialogue();
 
@@ -50,15 +50,15 @@ public class StoryManager : MonoBehaviour
         CurCount += 1;
 
         //所有剧情文案加载完毕
-        if (CurCount >= MaxCount+1)
+        if (CurCount >= MaxCount + 1)
         {
             button.gameObject.SetActive(false);
-            Invoke("GoToGame", 1f);
+            Invoke("GoToSelect", 1f);
         }
     }
 
-    private void GoToGame()
+    private void GoToSelect()
     {
-        SceneManager.LoadScene("game1");
+        SceneManager.LoadScene("selectScene");
     }
 }

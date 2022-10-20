@@ -71,10 +71,10 @@ public class FightManager : MonoBehaviour
                 fightUnit = obj.AddComponent<FightEnemyTurn>();
                 break;
             case FightType.Win:
-                fightUnit = obj.AddComponent < FightWin>();
+                fightUnit = obj.AddComponent <FightWin>();
                 break;
             case FightType.Lose:
-                fightUnit = obj.AddComponent < FightLose>();
+                fightUnit = obj.AddComponent <FightLose>();
                 break;
         }
         fightUnit.Init();

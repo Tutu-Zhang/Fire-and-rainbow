@@ -19,7 +19,7 @@ public class GameConfigManager
 
     private GameConfigData DialogueBeforeData;
 
-    private GameConfigData CGBeforeData;
+    private GameConfigData DialogueAfterData;
 
     private TextAsset textAsset;
 
@@ -45,8 +45,8 @@ public class GameConfigManager
         textAsset = Resources.Load<TextAsset>("Data/DialogueBefore");
         DialogueBeforeData = new GameConfigData(textAsset.text);
 
-        textAsset = Resources.Load<TextAsset>("Data/CGBefore");
-        CGBeforeData = new GameConfigData(textAsset.text);
+        textAsset = Resources.Load<TextAsset>("Data/DialogueAfter");
+        DialogueAfterData = new GameConfigData(textAsset.text);
     }
 
     public List<Dictionary<string,string>> GetCardLines()
@@ -69,9 +69,9 @@ public class GameConfigManager
         return DialogueBeforeData.GetLines();
     }
 
-    public List<Dictionary<string, string>> GetCGBeforeData()
+    public List<Dictionary<string, string>> GetDialogueAfterDataData()
     {
-        return CGBeforeData.GetLines();
+        return DialogueAfterData.GetLines();
     }
 
 
@@ -105,8 +105,8 @@ public class GameConfigManager
         return DialogueBeforeData.GetOneById(id);
     }
 
-    public Dictionary<string, string> GetCGBeforeDataByid(string id)
+    public Dictionary<string, string> GetDialogueAfterDataById(string id)
     {
-        return CGBeforeData.GetOneById(id);
+        return DialogueAfterData.GetOneById(id);
     }
 }

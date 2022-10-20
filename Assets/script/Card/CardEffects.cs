@@ -108,7 +108,7 @@ public class CardEffects
 
     public static void attack_1000()
     {
-        FightManager.Instance.Attack_Enemy(4);
+        FightManager.Instance.Attack_Enemy(40);
     }
 
     public static void attack_1001()

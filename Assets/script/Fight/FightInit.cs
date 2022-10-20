@@ -26,8 +26,10 @@ public class FightInit : FightUnit
         //加载战斗元素
         UIManager.Instance.ShowUI<FightUI>("fightBackground");
 
+        int levelCount = LevelManager.Instance.level;
+
         //加载关卡资源
-        switch (LevelManager.Instance.level)
+        switch (levelCount)
         {
             case 0:
                 EnemyManager.Instance.loadRes("10000");
@@ -46,11 +48,12 @@ public class FightInit : FightUnit
                 break;
         }
 
-        //EnemyManager.Instance.loadRes("10004");
 
         //切换到玩家回合
         FightManager.Instance.ChangeType(FightType.Player);
     }
+
+
 
     public override void OnUpdate()
     {

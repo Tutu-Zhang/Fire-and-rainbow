@@ -5,15 +5,38 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class FightWin : FightUnit
 {
+    public Button BackToSelect;
+    public Button GoToAfterGame;
+
     public override void Init()
     {
         FightManager.Instance.StopAllCoroutines();
         Debug.Log("游戏胜利");
-
-        //需要显示一个结算UI，点击按钮方可回到选择页面或加载下一关
-        SceneManager.LoadScene("selectScene");
-
+    
+        Invoke("ShowWindow", 1f);
     }
+
+    private void ShowWindow()
+    {
+        GameObject obj = GameObject.Find("/Canvas/GameWindow/GameWin");
+        obj.SetActive(true);
+
+        BackToSelect = GameObject.FindGameObjectWithTag("WinGTL").GetComponent<Button>();
+        BackToSelect.onClick.AddListener(GoToSelectScence);
+        GoToAfterGame = GameObject.FindGameObjectWithTag("WinGTS").GetComponent<Button>();
+        GoToAfterGame.onClick.AddListener(GoToAfterGameScence);
+    }
+
+    private void GoToSelectScence()
+    {
+        SceneManager.LoadScene("selectScene");
+    }
+
+    private void GoToAfterGameScence()
+    {
+        SceneManager.LoadScene("AfterGame");
+    }
+
     public override void OnUpdate()
     {
 

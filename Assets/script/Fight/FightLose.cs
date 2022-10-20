@@ -5,13 +5,37 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class FightLose : FightUnit
 {
+    public Button BackToSelect;
+    public Button ReBuildGame;
+
     public override void Init()
     {
-        Debug.Log("你死了");
         FightManager.Instance.StopAllCoroutines();
+        Debug.Log("游戏失败");
 
-        //需要显示一个结算UI，点击按钮方可回到选择页面或加载下一关
+        Invoke("ShowWindow", 1f);
+
+                                    
+    }
+    private void ShowWindow()
+    {
+        GameObject obj = GameObject.Find("/Canvas/GameWindow/GameLose");
+        obj.SetActive(true);
+
+        BackToSelect = GameObject.FindGameObjectWithTag("LoseGTL").GetComponent<Button>();
+        BackToSelect.onClick.AddListener(GoToSelectScence);
+        ReBuildGame = GameObject.FindGameObjectWithTag("LoseGTS").GetComponent<Button>();
+        ReBuildGame.onClick.AddListener(GoToReBuildGame);
+    }
+
+    private void GoToSelectScence()
+    {
         SceneManager.LoadScene("selectScene");
+    }
+
+    private void GoToReBuildGame()
+    {
+        SceneManager.LoadScene("game1");
     }
 
     public override void OnUpdate()

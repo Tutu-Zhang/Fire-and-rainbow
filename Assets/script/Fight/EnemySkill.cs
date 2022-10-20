@@ -168,7 +168,7 @@ public class EnemySkill : MonoBehaviour
                 break;
 
             case ActionType.Defend:
-                enemyInstance.Defend += 10;
+                enemyInstance.Defend += 5;
                 enemyInstance.UpdateDefend();
                 
                 ani.SetBool("isAttacking", true);
@@ -220,7 +220,7 @@ public class EnemySkill : MonoBehaviour
 
         if (enemyInstance.ifLv4BossConsumeLives)
         {
-            enemyInstance.Defend += 5;
+            enemyInstance.Defend -= 100;
             enemyInstance.CurHp += enemyInstance.MaxHp;
             enemyInstance.UpdateDefend();
             enemyInstance.UpdateHp();
