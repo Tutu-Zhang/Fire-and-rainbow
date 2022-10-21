@@ -38,8 +38,8 @@ public class EnemySkill : MonoBehaviour
                 ani.SetBool("isAttacking", true);
                 //等待攻击动画播放完，这里时间也可以配置
                 yield return new WaitForSeconds(1);
-                //摄像机抖动(现在不抖动
-                Camera.main.DOShakePosition(0.1f, 0f, 5, 45);
+                //摄像机抖动
+                Camera.main.DOShakePosition(0.1f, 1f, 5, 45);
                 //玩家扣血
                 FightManager.Instance.GetPlayHit(enemyInstance.Attack);
                 ani.SetBool("isAttacking", false);
@@ -94,7 +94,7 @@ public class EnemySkill : MonoBehaviour
                 //等待攻击动画播放完，这里时间也可以配置
                 yield return new WaitForSeconds(1);
                 //摄像机抖动(现在不抖动
-                Camera.main.DOShakePosition(0.1f, 0f, 5, 45);
+                Camera.main.DOShakePosition(0.1f, 1f, 5, 45);
                 //玩家扣血
                 FightManager.Instance.GetPlayHit(enemyInstance.Attack+ boss1_HpLowerThan10TurnCount*2*HpLowerThan10);
                 ani.SetBool("isAttacking", false);
@@ -135,7 +135,7 @@ public class EnemySkill : MonoBehaviour
                 //等待攻击动画播放完，这里时间也可以配置
                 yield return new WaitForSeconds(1);
                 //摄像机抖动(现在不抖动
-                Camera.main.DOShakePosition(0.1f, 0f, 5, 45);
+                Camera.main.DOShakePosition(0.1f, 1f, 5, 45);
                 //玩家扣血
                 FightManager.Instance.GetPlayHit(enemyInstance.Attack + FightManager.Instance.turnCount);
                 ani.SetBool("isAttacking", false);
@@ -175,7 +175,7 @@ public class EnemySkill : MonoBehaviour
                 //等待攻击动画播放完，这里时间也可以配置
                 yield return new WaitForSeconds(1);
                 //摄像机抖动(现在不抖动
-                Camera.main.DOShakePosition(0.1f, 0f, 5, 45);
+                Camera.main.DOShakePosition(0.1f, 1f, 5, 45);
                 //玩家扣血
                 FightManager.Instance.GetPlayHit(enemyInstance.Attack);
                 ani.SetBool("isAttacking", false);
@@ -186,7 +186,7 @@ public class EnemySkill : MonoBehaviour
                 //等待攻击动画播放完，这里时间也可以配置
                 yield return new WaitForSeconds(1);
                 //摄像机抖动(现在不抖动
-                Camera.main.DOShakePosition(0.1f, 0f, 5, 45);
+                Camera.main.DOShakePosition(0.1f, 1f, 5, 45);
                 
                 //玩家扣血
                 if (FightManager.Instance.CurHP >= 10)
@@ -243,7 +243,7 @@ public class EnemySkill : MonoBehaviour
                 //等待攻击动画播放完，这里时间也可以配置
                 yield return new WaitForSeconds(1);
                 //摄像机抖动(现在不抖动
-                Camera.main.DOShakePosition(0.1f, 0f, 5, 45);
+                Camera.main.DOShakePosition(0.1f, 1f, 5, 45);
                 
 
                 if (enemyInstance.Defend >= 0)

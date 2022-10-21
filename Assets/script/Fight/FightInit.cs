@@ -32,6 +32,8 @@ public class FightInit : FightUnit
             levelCount = LevelManager.Instance.level;
 
 
+        //int levelCount = 0;
+
         //加载关卡资源
         switch (levelCount)
         {
