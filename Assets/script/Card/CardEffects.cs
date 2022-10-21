@@ -9,10 +9,19 @@ public class CardEffects
         switch (cardid)
         {
             case "0000":
+                recover_Defend_0000();
+                break;
+
+            case "0001":
+                attack_defend_0001();
                 break;
 
             case "0010":
                 reDrawCard_0010();
+                break;
+
+            case "0011":
+                gamble_0011();
                 break;
 
             case "0100":
@@ -66,17 +75,47 @@ public class CardEffects
         }
     }
 
+    public static void recover_Defend_0000()
+    {
+        FightManager.Instance.GetDefendRecover(2);
+    }
+
+    public static void attack_defend_0001()
+    {
+        FightManager.Instance.Attack_Enemy(2);
+        FightManager.Instance.GetDefendRecover(2);
+    }
+
     public static void reDrawCard_0010()
     {
-        if (FightCardManager.Instance.HasCard() == false)
-        {
-            FightCardManager.Instance.PrintCard();
+        UIManager.Instance.GetUI<FightUI>("fightBackground").addBuff("0010", 2);
+        UIManager.Instance.GetUI<FightUI>("fightBackground").UpdateCardItemPos();
+    }
 
-            //UIManager.Instance.GetUI<FightUI>("FightUI").UpdateCardCount();
+    public static void gamble_0011()
+    {
+        System.Random random = new System.Random();
+        string card = "";
+
+        while (card.Length < 4)
+        {
+            string num = "0";
+            double temp = random.NextDouble();
+            if (temp > 0.5)
+            {
+                num = "1";
+            }
+
+            card += num;
         }
 
-        UIManager.Instance.GetUI<FightUI>("fightBackground").CreatCardItem(4);
-        UIManager.Instance.GetUI<FightUI>("fightBackground").UpdateCardItemPos();
+        Debug.Log("0011±¾´ÎÓ¡ÅÆÎª" + card);
+        if (card == "0011")
+        {
+            MatchCard("1000");
+        }
+        else
+            MatchCard(card);
     }
 
     public static void recover_0100()
@@ -108,25 +147,25 @@ public class CardEffects
 
     public static void attack_1000()
     {
-        FightManager.Instance.Attack_Enemy(40);
+        FightManager.Instance.Attack_Enemy(4);
     }
 
     public static void attack_1001()
     {
-        FightManager.Instance.Attack_Enemy(2);
+        FightManager.Instance.Attack_Enemy(3);
         UIManager.Instance.GetUI<FightUI>("fightBackground").addBuff("1001", 3);
     }
 
 
     public static void attack_1010()
     {
-        FightManager.Instance.Attack_Enemy(3);
+        FightManager.Instance.Attack_Enemy(4);
 
         System.Random random = new System.Random();
         double temp = random.NextDouble();
         if (temp >= 0.5)
         {
-            FightManager.Instance.Attack_Enemy(3);
+            FightManager.Instance.Attack_Enemy(4);
         }
     }
 
@@ -137,6 +176,7 @@ public class CardEffects
 
     public static void silence_1100()
     {
+        FightManager.Instance.Attack_Enemy(4);
         UIManager.Instance.GetUI<FightUI>("fightBackground").addBuff("1100", 1);
     }
 
@@ -147,22 +187,15 @@ public class CardEffects
 
     public static void attack_1110()
     {
-        System.Random random = new System.Random();
-        double temp = random.NextDouble();
+        FightManager.Instance.Attack_Enemy(6);
+        UIManager.Instance.GetUI<FightUI>("fightBackground").addBuff("1110", 999);
 
-        if(temp > 0.75)
-        {
-            FightManager.Instance.GetPlayHit(4);
-        }
-        else
-        {
-            FightManager.Instance.Attack_Enemy(8);
-        }
     }
 
     public static void gamble_1111()
     {
-        UIManager.Instance.GetUI<FightUI>("fightBackground").addBuff("1111", 100);
+        FightManager.Instance.Attack_Enemy(10);
+        UIManager.Instance.GetUI<FightUI>("fightBackground").addBuff("1111", 5);
     }
 
 

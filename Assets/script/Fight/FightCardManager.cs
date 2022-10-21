@@ -5,7 +5,9 @@ using UnityEngine;
 public class FightCardManager 
 {
     public static FightCardManager Instance = new FightCardManager();
-
+    private static float CARD_PROBABILITY_LOW = 0.6f;
+    private static float CARD_PROBABILITY_HIGH = 0.4f;
+    public float card_probability;
 
     public List<string> cardList;//牌堆里的牌，也就是不在玩家手里的牌
 
@@ -15,17 +17,18 @@ public class FightCardManager
 
     public void Init()
     {
+        card_probability = CARD_PROBABILITY_LOW;
         cardList = new List<string>();
 
         //usedCardList = new List<string>();
 
         System.Random random = new System.Random();
         
-        while (cardList.Count<16)
+        while (cardList.Count<8)
         {
             string num = "0";
             double temp = random.NextDouble();
-            if (temp >= 0.6)
+            if (temp >= CARD_PROBABILITY_LOW)
             {
                 num = "1";
             }
@@ -39,20 +42,32 @@ public class FightCardManager
     public void PrintCard()
     {
         System.Random random = new System.Random();
-        //补满手牌
-        while (cardList.Count < 16)
+
+
+        while (cardList.Count < 3)
         {
             string num = "0";
             double temp = random.NextDouble();
-            if (temp >= 0.6)
+            if (temp >= card_probability)
             {
                 num = "1";
             }
-
-            cardList.Add(num);//相当于手牌列表
+            cardList.Add(num);//牌库，现在是没牌印3张牌，因为unity自带的random并非真随机，如果印一张抽一张很容易出现全1或者全0
+            Debug.Log("本次印牌为" + num + ",抽卡概率为" + card_probability);
         }
 
-        //Debug.Log(cardList.Count);//输出手牌堆数量
+       
+    }
+
+
+    public void SetPro_Low()
+    {
+        card_probability = CARD_PROBABILITY_LOW;
+    }
+
+    public void SetPro_High()
+    {
+        card_probability = CARD_PROBABILITY_HIGH;
     }
 
     //是否有卡
@@ -64,7 +79,7 @@ public class FightCardManager
     //抽卡
     public string DrawCard()
     {
-        if (!HasCard())
+        if(!HasCard())
             PrintCard();
 
         string id = cardList[cardList.Count - 1];//牌库？

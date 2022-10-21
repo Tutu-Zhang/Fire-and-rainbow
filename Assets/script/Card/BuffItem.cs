@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BuffItem : MonoBehaviour
 {
-    public string Buff_Id;
+    private string Buff_Id;
     public int left_time;
 
 
@@ -29,12 +29,26 @@ public class BuffItem : MonoBehaviour
         left_time += time;
     }
 
+    public void SetLeftTime(int time)
+    {
+        left_time = time;
+    }
+
     public void PassTurn()
     {
         left_time--;
-        if (left_time == 0)
+        if (left_time <= 0)
+        {
+            if (this.Buff_Id == "0010")
+                changeBackDrawCardProbability();
+
             UIManager.Instance.GetUI<FightUI>("fightBackground").RemoveBuff(this);
+        }
     }
 
-
+    //当Buff为0010，buff消失时抽卡概率变回0.4
+    private void changeBackDrawCardProbability()
+    {
+        FightCardManager.Instance.SetPro_Low();
+    }
 }

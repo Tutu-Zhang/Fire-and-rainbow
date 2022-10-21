@@ -23,7 +23,6 @@ public class FightManager : MonoBehaviour
     public int MaxHP;
     public int CurHP;
 
-    public int turnCount = 0;
 
     //public int MaxPowerCount;//最大能量（好像用不到
     //public int CurPowerCount;//当前能量
@@ -105,6 +104,16 @@ public class FightManager : MonoBehaviour
             BuffEffects.buff_counter_1101(this_hit);
         }
 
+        if (UIManager.Instance.GetUI<FightUI>("fightBackground").FindBuff("1110") != null)
+        {
+            if (BuffEffects.buff_keepAlive_1110(this_hit)){
+                this_hit = 0;
+
+                UIManager.Instance.GetUI<FightUI>("fightBackground").FindBuff("1110").SetLeftTime(0);
+            }
+            
+        }
+
         //优先扣护盾
         if (DefCount >= this_hit)
         {
@@ -143,23 +152,33 @@ public class FightManager : MonoBehaviour
         UIManager.Instance.GetUI<FightUI>("fightBackground").UpdateDef();
     }
 
+    public void GetDefendRecover(int recover)
+    {
+        DefCount += recover;
+
+        UIManager.Instance.GetUI<FightUI>("fightBackground").UpdateHP();
+        UIManager.Instance.GetUI<FightUI>("fightBackground").UpdateDef();
+    }
+
     public void Attack_Enemy(int val)
     {
-        
-        int gamble = 1;
+     ////专判1111buff   
+
         if (UIManager.Instance.GetUI<FightUI>("fightBackground").FindBuff("1111") != null)
         {
-            gamble = BuffEffects.buff_gamble_1111();
-        }
-
-        if (gamble != 0)
-        {
-            EnemyManager.Instance.GetEnemy(0).Hited(val * gamble);
+            if (BuffEffects.buff_gamble_1111())
+            {
+                EnemyManager.Instance.GetEnemy(0).Hited(val * 2);
+            }
+            else
+            {
+                EnemyManager.Instance.GetEnemy(0).Hited(val);
+                GetRecover(val);
+            }
         }
         else
         {
-            GetPlayHit(val); //这个就是有1111buff时判定失败伤害转移到自己，不过这个依然视为敌方造成的伤害而非流失体力，所以1101和0111 buff依然是生效的
-                             //也就是说假如现在同时有1111和1101这两个buff，那么判定成功了就是敌方受到两倍伤害，失败了就是敌方和我都受到一倍伤害
+            EnemyManager.Instance.GetEnemy(0).Hited(val);
         }
     }
 

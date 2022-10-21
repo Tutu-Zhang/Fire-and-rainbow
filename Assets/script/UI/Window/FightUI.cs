@@ -12,12 +12,14 @@ public class FightUI : UIBase
     //private Text powerText;
     private Text hpText;
     private Image hpImage;
+    private Image hpHitImage;
     private Text defText;
     private GameObject playerHPBar;
 
     private GameObject playCardZone;
     private GameObject cardZone;
     private GameObject cardArea;
+    private GameObject enemyCase;
     private String skillText = "技能描述";
 
     private List<CardItem> cardItemList; //手牌区集合
@@ -63,9 +65,31 @@ public class FightUI : UIBase
             Debug.Log(cardId);
 
 
-            RemoveAllCards(true);//为true时为移除出牌区卡片，false时移除手牌区
+            //RemoveAllCards(true);//为true时为移除出牌区卡片，false时移除手牌区
             CardEffects.MatchCard(cardId); //Matchcard顺便就执行卡的效果
+           StartCoroutine(UseCardEffects(cardId));
         }
+    }
+
+    IEnumerator UseCardEffects(string id)
+    {
+        if (id[0] == '1')
+        {
+            for (int i = 0; i < PlayCardList.Count; i++)
+            {
+                PlayCardList[i].transform.DOMove(enemyCase.transform.position, 1f);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < PlayCardList.Count; i++)
+            {
+                PlayCardList[i].transform.DOMove(playerHPBar.transform.position, 1f);
+            }
+        }
+        //yield return new WaitForSeconds(1f);
+        yield return null;
+        RemoveAllCards(true);
     }
 
     //显示卡牌效果
@@ -123,8 +147,10 @@ public class FightUI : UIBase
         Debug.Log("找到血条");
         hpText = playerHPBar.transform.Find("PlayerHPText").GetComponent<Text>();
         hpImage = playerHPBar.transform.Find("PlayerHPFill").GetComponent<Image>();
+        hpHitImage = playerHPBar.transform.Find("PlayerHitHPFill").GetComponent<Image>();
         defText = playerHPBar.transform.Find("PlayerDefText").GetComponent<Text>();
 
+        enemyCase = transform.Find("EnemyCase").gameObject;
         playCardZone = transform.Find("PlayCardZone").gameObject;
         cardZone = transform.Find("CardZone").gameObject;
         cardArea = transform.Find("CardArea").gameObject;
@@ -151,7 +177,22 @@ public class FightUI : UIBase
     {
         hpText.text = FightManager.Instance.CurHP + "/" + FightManager.Instance.MaxHP;
         hpImage.fillAmount = (float)FightManager.Instance.CurHP / (float)FightManager.Instance.MaxHP;
+
+        StartCoroutine(ChangeHitFill());
     }
+
+    public IEnumerator ChangeHitFill()
+    {
+        while(hpHitImage.fillAmount > hpImage.fillAmount)
+        {
+            hpHitImage.fillAmount -= 0.005f;
+            yield return new WaitForSeconds(0.04f);
+        }
+
+        hpHitImage.fillAmount = hpImage.fillAmount;
+        yield break;
+    }
+
 
 
     public void UpdateDef()

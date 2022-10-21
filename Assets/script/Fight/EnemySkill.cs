@@ -137,7 +137,7 @@ public class EnemySkill : MonoBehaviour
                 //摄像机抖动(现在不抖动
                 Camera.main.DOShakePosition(0.1f, 1f, 5, 45);
                 //玩家扣血
-                FightManager.Instance.GetPlayHit(enemyInstance.Attack + FightManager.Instance.turnCount);
+                FightManager.Instance.GetPlayHit(enemyInstance.Attack + FightManager.Instance.TurnCount);
                 ani.SetBool("isAttacking", false);
 
                 enemyInstance.CurHp += 5;

@@ -8,7 +8,6 @@ public class FightEnemyTurn : FightUnit
     {
         //删除所有卡牌(我们不需要显示删除卡牌
         //UIManager.Instance.GetUI<FightUI>("FightUI").RemoveAllCards();
-        FightManager.Instance.turnCount += 1;
 
         FightManager.Instance.SetBtn(false); //关掉结束回合按钮
 

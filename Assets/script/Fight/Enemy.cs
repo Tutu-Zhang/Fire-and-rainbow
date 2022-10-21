@@ -26,6 +26,7 @@ public class Enemy : MonoBehaviour
     public Text defText;
     public Text hpText;
     public Image hpImg;
+    public Image hpHitImg;
 
     //数值相关(这部分数值存储在txt中
     public int Defend;
@@ -65,6 +66,7 @@ public class Enemy : MonoBehaviour
         defText = hpItemObj.transform.Find("EnemyDEFText").GetComponent<Text>();//找到组件中的防御力数值
         hpText = hpItemObj.transform.Find("EnemyHPText").GetComponent<Text>();
         hpImg = hpItemObj.transform.Find("EnemyHPFill").GetComponent<Image>();//找到血条图标
+        hpHitImg = hpItemObj.transform.Find("EnemyHitHPFill").GetComponent<Image>();//找到血条图标
 
 
 
@@ -96,6 +98,20 @@ public class Enemy : MonoBehaviour
 
         hpText.text = CurHp + "/" + MaxHp;
         hpImg.fillAmount = (float)CurHp / (float)MaxHp;
+
+        StartCoroutine(ChangeEnemyHitFill());
+    }
+
+    public IEnumerator ChangeEnemyHitFill()
+    {
+        while (hpHitImg.fillAmount > hpImg.fillAmount)
+        {
+            hpHitImg.fillAmount -= 0.005f;
+            yield return new WaitForSeconds(0.04f);
+        }
+
+        hpHitImg.fillAmount = hpImg.fillAmount;
+        yield break;
     }
 
     //更新敌人防御
