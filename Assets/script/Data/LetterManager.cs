@@ -22,7 +22,8 @@ public class LetterManager : MonoBehaviour
     public void Start()
     {
         GameConfigManager.Instance.Init();
-        levelCount = LevelManager.Instance.level;
+        if(LevelManager.Instance)
+            levelCount = LevelManager.Instance.level;
         //levelCount = 1;//调试用
 
         //改变背景图物体

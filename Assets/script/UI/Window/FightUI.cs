@@ -38,7 +38,13 @@ public class FightUI : UIBase
         //只有玩家才能切换
         if (FightManager.Instance.fightUnit is FightPlayerTurn)
         {
-            RemoveAllCards(true);
+            //RemoveAllCards(true);
+            for(int i = PlayCardList.Count - 1; i >= 0; i--)
+            {
+                PlayCardList[i].SetPlayArea(false);
+                MoveCardToHandArea(PlayCardList[i]);
+            }
+
             FightManager.Instance.ChangeType(FightType.Enemy);
         }
         Debug.Log("回合切换");
@@ -47,19 +53,19 @@ public class FightUI : UIBase
     //打出卡
     private void UseCard()
     {
-        string cardId = "";
-        for(int i = 0; i < PlayCardList.Count; i++)
+        if (FightManager.Instance.fightUnit is FightPlayerTurn)
         {
-            cardId = cardId + PlayCardList[i].GetCardNum().ToString();
+            string cardId = "";
+            for (int i = 0; i < PlayCardList.Count; i++)
+            {
+                cardId = cardId + PlayCardList[i].GetCardNum().ToString();
+            }
+            Debug.Log(cardId);
+
+
+            RemoveAllCards(true);//为true时为移除出牌区卡片，false时移除手牌区
+            CardEffects.MatchCard(cardId); //Matchcard顺便就执行卡的效果
         }
-        Debug.Log(cardId);
-
-
-        RemoveAllCards(true);//为true时为移除出牌区卡片，false时移除手牌区
-        CardEffects.MatchCard(cardId); //Matchcard顺便就执行卡的效果
-
-
-        //Dictionary<string, string> enemyData = GameConfigManager.Instance.GetPlayerSkillsById("00001");
     }
 
     //显示卡牌效果
@@ -263,7 +269,7 @@ public class FightUI : UIBase
         CardItem nowcard = card;
         Debug.Log(nowcard);
 
-        if (PlayCardList.Count < 4)
+        if (PlayCardList.Count < 4 && FightManager.Instance.fightUnit is FightPlayerTurn)
         {
             PlayCardList.Add(nowcard);
             UpdatePlayCardPos();

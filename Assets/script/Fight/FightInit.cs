@@ -26,11 +26,19 @@ public class FightInit : FightUnit
         //加载战斗元素
         UIManager.Instance.ShowUI<FightUI>("fightBackground");
 
-        int levelCount = LevelManager.Instance.level;
+        int levelCount = -1;
+
+        if(LevelManager.Instance != null)
+            levelCount = LevelManager.Instance.level;
+
 
         //加载关卡资源
         switch (levelCount)
         {
+            case -1:
+                EnemyManager.Instance.loadRes("10000");
+                break;
+
             case 0:
                 EnemyManager.Instance.loadRes("10000");
                 break;

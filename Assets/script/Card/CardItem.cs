@@ -49,16 +49,21 @@ public class CardItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, 
     public void OnPointerClick(PointerEventData eventData)
     {
         Debug.Log("click");
-        if (!IsInPlayArea)
+        if (!IsInPlayArea && FightManager.Instance.fightUnit is FightPlayerTurn)
         {
             if(UIManager.Instance.GetUI<FightUI>("fightBackground").MoveCardToPlayArea(this))
                 IsInPlayArea = true;
         }
-        else
+        else if(IsInPlayArea && FightManager.Instance.fightUnit is FightPlayerTurn)
         {
             UIManager.Instance.GetUI<FightUI>("fightBackground").MoveCardToHandArea(this);
             IsInPlayArea = false;
         }
+    }
+
+    public void SetPlayArea(bool temp)
+    {
+        IsInPlayArea = temp;
     }
 
     private void Start()

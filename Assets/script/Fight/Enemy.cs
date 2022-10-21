@@ -141,7 +141,7 @@ public class Enemy : MonoBehaviour
             if (CurHp <= 0 )
             {
                 //第四关boss有三条命
-                if (LevelManager.Instance.level == 4 && Lv4BossLives > 0)
+                if (LevelManager.Instance != null && LevelManager.Instance.level == 4 && Lv4BossLives > 0)
                 {
                     CurHp = 1;
                     Defend += 100;
@@ -193,25 +193,31 @@ public class Enemy : MonoBehaviour
 
     public IEnumerator DoAction()
     {
-        
-        switch (LevelManager.Instance.level)
+        if (LevelManager.Instance)
         {
+            switch (LevelManager.Instance.level)
+            {
 
-            case 0:
-                yield return EnemySkill.Instance.EnemyActio0(this,type);
-                break;
-            case 1:
-                yield return EnemySkill.Instance.EnemyActio1(this,type, CurHp);
-                break;
-            case 2:
-                yield return EnemySkill.Instance.EnemyActio2(this, type);
-                break;
-            case 3:
-                yield return EnemySkill.Instance.EnemyActio3(this, type);
-                break;
-            case 4:
-                yield return EnemySkill.Instance.EnemyActio4(this, type);
-                break;
+                case 0:
+                    yield return EnemySkill.Instance.EnemyActio0(this, type);
+                    break;
+                case 1:
+                    yield return EnemySkill.Instance.EnemyActio1(this, type, CurHp);
+                    break;
+                case 2:
+                    yield return EnemySkill.Instance.EnemyActio2(this, type);
+                    break;
+                case 3:
+                    yield return EnemySkill.Instance.EnemyActio3(this, type);
+                    break;
+                case 4:
+                    yield return EnemySkill.Instance.EnemyActio4(this, type);
+                    break;
+            }
+        }
+        else
+        {
+            yield return EnemySkill.Instance.EnemyActio0(this, type);
         }
     }
 
