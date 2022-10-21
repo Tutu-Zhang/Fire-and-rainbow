@@ -118,6 +118,11 @@ public class FightManager : MonoBehaviour
             if (CurHP <= 0)
             {
                 CurHP = 0;
+                //删除敌人模型
+                GameObject enemyModel = GameObject.FindGameObjectWithTag("Enemy");
+                Debug.Log("找到敌人模型");
+                Destroy(enemyModel, 1);
+                
                 //切换到游戏失败状态
                 ChangeType(FightType.Lose);
             }
