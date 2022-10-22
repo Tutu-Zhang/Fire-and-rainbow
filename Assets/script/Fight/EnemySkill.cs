@@ -60,23 +60,25 @@ public class EnemySkill : MonoBehaviour
         //获取动画控件
         GameObject enemy = GameObject.Find("EnemyWaiting(Clone)");
         ani = enemy.GetComponent<Animator>();
-        int HpLowerThan10 = 0;
+        int HpLowerThan15 = 0;
         
 
         
-        if (EnemyHP < 10)
+        if (EnemyHP < 15)
         {
-            HpLowerThan10 = 1;
+            HpLowerThan15 = 1;
             boss1_HpLowerThan10TurnCount += 1;
         }
         else
         {
-            HpLowerThan10 = 0;
+            HpLowerThan15 = 0;
         }
 
         //等待一段时间后执行行为
         yield return new WaitForSeconds(0.5f);//等待0.5秒
-        
+
+        ShowEnemyActionText(enemyInstance, typeIn);
+
         switch (typeIn)
         {
 
@@ -84,7 +86,7 @@ public class EnemySkill : MonoBehaviour
                 break;
             
             case ActionType.Defend:
-                enemyInstance.Defend += 5;
+                enemyInstance.Defend += 7;
                 enemyInstance.UpdateDefend();
                 break;
             
@@ -96,7 +98,7 @@ public class EnemySkill : MonoBehaviour
                 //摄像机抖动(现在不抖动
                 Camera.main.DOShakePosition(0.1f, 1f, 5, 45);
                 //玩家扣血
-                FightManager.Instance.GetPlayHit(enemyInstance.Attack+ boss1_HpLowerThan10TurnCount*2*HpLowerThan10);
+                FightManager.Instance.GetPlayHit(enemyInstance.Attack+ boss1_HpLowerThan10TurnCount*2*HpLowerThan15);
                 ani.SetBool("isAttacking", false);
                 break;
         }
@@ -104,6 +106,7 @@ public class EnemySkill : MonoBehaviour
         //等待动画播放完，这里时间也可以配置
         yield return new WaitForSeconds(1);
 
+        HideEnemyActionText();
         enemyInstance.HideAction();
 
     }
@@ -117,7 +120,9 @@ public class EnemySkill : MonoBehaviour
 
         //等待一段时间后执行行为
         yield return new WaitForSeconds(0.5f);//等待0.5秒
-        
+
+        ShowEnemyActionText(enemyInstance, typeIn);
+
         switch (typeIn)
         {
 
@@ -134,7 +139,7 @@ public class EnemySkill : MonoBehaviour
                 ani.SetBool("isAttacking", true);
                 //等待攻击动画播放完，这里时间也可以配置
                 yield return new WaitForSeconds(1);
-                //摄像机抖动(现在不抖动
+                //摄像机抖动
                 Camera.main.DOShakePosition(0.1f, 1f, 5, 45);
                 //玩家扣血
                 FightManager.Instance.GetPlayHit(enemyInstance.Attack + FightManager.Instance.TurnCount);
@@ -148,10 +153,11 @@ public class EnemySkill : MonoBehaviour
         //等待动画播放完，这里时间也可以配置
         yield return new WaitForSeconds(1);
 
+        HideEnemyActionText();
         enemyInstance.HideAction();
     }
 
-    //刀哥：基础攻击面板较高，技能分为两种，defend对应造成伤害并恢复护甲，attack对应造成大量伤害，若玩家血量低于10则斩杀
+    //刀哥：基础攻击面板较高，技能分为两种，defend对应造成伤害并恢复护甲，attack对应造成大量伤害，若玩家血量低于15则斩杀
     public IEnumerator EnemyActio3(Enemy enemyInstance, ActionType typeIn)
     {
         //获取动画控件
@@ -161,6 +167,8 @@ public class EnemySkill : MonoBehaviour
         //等待一段时间后执行行为
         yield return new WaitForSeconds(0.5f);//等待0.5秒
 
+        ShowEnemyActionText(enemyInstance, typeIn);
+
         switch (typeIn)
         {
 
@@ -168,7 +176,7 @@ public class EnemySkill : MonoBehaviour
                 break;
 
             case ActionType.Defend:
-                enemyInstance.Defend += 5;
+                enemyInstance.Defend += 10;
                 enemyInstance.UpdateDefend();
                 
                 ani.SetBool("isAttacking", true);
@@ -177,7 +185,7 @@ public class EnemySkill : MonoBehaviour
                 //摄像机抖动(现在不抖动
                 Camera.main.DOShakePosition(0.1f, 1f, 5, 45);
                 //玩家扣血
-                FightManager.Instance.GetPlayHit(enemyInstance.Attack);
+                FightManager.Instance.GetPlayHit(enemyInstance.Attack + 2);
                 ani.SetBool("isAttacking", false);
                 break;
 
@@ -189,7 +197,7 @@ public class EnemySkill : MonoBehaviour
                 Camera.main.DOShakePosition(0.1f, 1f, 5, 45);
                 
                 //玩家扣血
-                if (FightManager.Instance.CurHP >= 10)
+                if (FightManager.Instance.CurHP >= 15)
                 {
                     FightManager.Instance.GetPlayHit(enemyInstance.Attack + 5);
                 }
@@ -205,6 +213,7 @@ public class EnemySkill : MonoBehaviour
         //等待动画播放完，这里时间也可以配置
         yield return new WaitForSeconds(1);
 
+        HideEnemyActionText();
         enemyInstance.HideAction();
     }
 
@@ -215,12 +224,30 @@ public class EnemySkill : MonoBehaviour
         GameObject enemy = GameObject.Find("EnemyWaiting(Clone)");
         ani = enemy.GetComponent<Animator>();
 
+        System.Random random = new System.Random();
+        double temp = random.NextDouble();
+
+        if (temp >0.3)
+        {
+            typeIn = ActionType.Attack;
+        }
+        else
+        {
+            typeIn = ActionType.Defend;
+        }
+
         //等待一段时间后执行行为
         yield return new WaitForSeconds(0.5f);//等待0.5秒
 
+        ShowEnemyActionText(enemyInstance, typeIn);
+
         if (enemyInstance.ifLv4BossConsumeLives)
         {
-            enemyInstance.Defend -= 100;
+            enemyInstance.Defend -= 80;
+            if (enemyInstance.Defend < 20)
+            {
+                enemyInstance.Defend = 20;
+            }
             enemyInstance.CurHp += enemyInstance.MaxHp;
             enemyInstance.UpdateDefend();
             enemyInstance.UpdateHp();
@@ -275,6 +302,39 @@ public class EnemySkill : MonoBehaviour
                 ani.SetBool("isAttacking", false);
                 break;
         }
+
+        //等待动画播放完，这里时间也可以配置
+        yield return new WaitForSeconds(1);
+
+        HideEnemyActionText();
+        enemyInstance.HideAction();
     }
+
+    public void ShowEnemyActionText(Enemy enemyInstance,ActionType TypeIn)
+    {
+        GameObject EnemyActionTextObj = GameObject.FindGameObjectWithTag("EnemyActionText");
+        string ActionString = "";
+        switch (TypeIn)
+        {
+            case ActionType.Defend:
+                ActionString = enemyInstance.DefAction;
+                break;
+            case ActionType.Attack:
+                ActionString = enemyInstance.AtkAction;
+                break;
+            case ActionType.None:
+                break;
+        }
+        Debug.Log(EnemyActionTextObj);
+
+        EnemyActionTextObj.GetComponent<Text>().text = ActionString;
+    }
+
+    public void HideEnemyActionText()
+    {
+        GameObject EnemyActionTextObj = GameObject.FindGameObjectWithTag("EnemyActionText");
+        EnemyActionTextObj.GetComponent<Text>().text = " ";
+    }
+
 
 }

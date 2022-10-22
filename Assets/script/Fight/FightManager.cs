@@ -128,9 +128,9 @@ public class FightManager : MonoBehaviour
             {
                 CurHP = 0;
                 //删除敌人模型
-                GameObject enemyModel = GameObject.FindGameObjectWithTag("Enemy");
+                GameObject enemyModel = GameObject.FindGameObjectWithTag("Enemy");  
                 Debug.Log("找到敌人模型");
-                Destroy(enemyModel, 1);
+                Destroy(enemyModel);
                 
                 //切换到游戏失败状态
                 ChangeType(FightType.Lose);
@@ -162,17 +162,19 @@ public class FightManager : MonoBehaviour
 
     public void Attack_Enemy(int val)
     {
-     ////专判1111buff   
-
+        ////专判1111buff   
+        Debug.Log("AttackEnemy执行");
         if (UIManager.Instance.GetUI<FightUI>("fightBackground").FindBuff("1111") != null)
         {
             if (BuffEffects.buff_gamble_1111())
             {
                 EnemyManager.Instance.GetEnemy(0).Hited(val * 2);
+                Debug.Log("AttackEnemy伤害翻倍");
             }
             else
             {
                 EnemyManager.Instance.GetEnemy(0).Hited(val);
+                Debug.Log("AttackEnemy吸血伤害");
                 GetRecover(val);
             }
         }

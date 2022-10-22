@@ -44,7 +44,7 @@ public class FightCardManager
         System.Random random = new System.Random();
 
 
-        while (cardList.Count < 3)
+        while (cardList.Count < 4)
         {
             string num = "0";
             double temp = random.NextDouble();
