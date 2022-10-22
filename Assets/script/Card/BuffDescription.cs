@@ -48,7 +48,7 @@ public class BuffDescription : MonoBehaviour, IPointerClickHandler
 
         for (int i = 0; i < bufflist.Count; i++)
         {
-            buffText += bufflist[i].GetBuffId() +":"+ BuffDesData[bufflist[i].GetBuffId()] + ",剩余" + bufflist[i].GetLeftTime() + "回合";
+            buffText += bufflist[i].GetBuffId() +":"+ BuffDesData[bufflist[i].GetBuffId()] + ",剩余" + bufflist[i].GetLeftTime() + "回合"+"\n\n";
         }
 
         Case.SetActive(true);

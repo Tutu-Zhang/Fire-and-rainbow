@@ -181,7 +181,7 @@ public class EnemySkill : MonoBehaviour
                 
                 ani.SetBool("isAttacking", true);
                 //等待攻击动画播放完，这里时间也可以配置
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(0.5f);
                 //摄像机抖动(现在不抖动
                 Camera.main.DOShakePosition(0.1f, 1f, 5, 45);
                 //玩家扣血
@@ -192,7 +192,7 @@ public class EnemySkill : MonoBehaviour
             case ActionType.Attack:
                 ani.SetBool("isAttacking", true);
                 //等待攻击动画播放完，这里时间也可以配置
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(0.5f);
                 //摄像机抖动(现在不抖动
                 Camera.main.DOShakePosition(0.1f, 1f, 5, 45);
                 
@@ -224,6 +224,12 @@ public class EnemySkill : MonoBehaviour
         GameObject enemy = GameObject.Find("EnemyWaiting(Clone)");
         ani = enemy.GetComponent<Animator>();
 
+        GameObject fire1 = GameObject.Find("/Canvas/天使攻击/巨炮待机");
+        Animator fire1Ani = fire1.GetComponent<Animator>();
+
+        GameObject fire2 = GameObject.Find("/Canvas/天使攻击/六炮待机");
+        Animator fire2Ani = fire2.GetComponent<Animator>();
+
         System.Random random = new System.Random();
         double temp = random.NextDouble();
 
@@ -239,8 +245,10 @@ public class EnemySkill : MonoBehaviour
         //等待一段时间后执行行为
         yield return new WaitForSeconds(0.5f);//等待0.5秒
 
+        //显示敌人行为
         ShowEnemyActionText(enemyInstance, typeIn);
 
+        //判断是否消耗生命
         if (enemyInstance.ifLv4BossConsumeLives)
         {
             enemyInstance.Defend -= 80;
@@ -266,48 +274,62 @@ public class EnemySkill : MonoBehaviour
                 break;
 
             case ActionType.Attack:
-                ani.SetBool("isAttacking", true);
-                //等待攻击动画播放完，这里时间也可以配置
                 yield return new WaitForSeconds(1);
-                //摄像机抖动(现在不抖动
-                Camera.main.DOShakePosition(0.1f, 1f, 5, 45);
                 
 
-                if (enemyInstance.Defend >= 0)
+                if (enemyInstance.Defend > 0)
                 {
+                    fire1.SetActive(true);
+                    fire1Ani.SetBool("isAttacking", true);
+                    yield return new WaitForSeconds(1.2f);
+                    //摄像机抖动
+                    Camera.main.DOShakePosition(0.1f, 1.2f, 5, 45);
                     //玩家扣血
                     FightManager.Instance.GetPlayHit(enemyInstance.Attack);
+                    fire1.SetActive(false);
                 }
                 else
                 {
                     if (FightManager.Instance.CurHP > 1)
                     {
-                        int ran = Random.Range(0, 1);
+/*                        int ran = Random.Range(0, 1);
 
-                        if (ran > 0.5)
-                        {
-                            FightManager.Instance.GetPlayHit(FightManager.Instance.CurHP - 1);
-                        }
+                        if (ran > 0.2)
+                        {*/
+                            fire2.SetActive(true);
+                            fire2Ani.SetBool("isAttacking", true);
+                            yield return new WaitForSeconds(1f);
+                            //摄像机抖动
+                            Camera.main.DOShakePosition(0.1f, 1.5f, 5, 45);
+                            FightManager.Instance.GetPlayHit(FightManager.Instance.CurHP + FightManager.Instance.DefCount - 1);
+                            fire2.SetActive(false);
+/*                        }
                         else
                         {
+                            fire1.SetActive(true);
+                            fire1Ani.SetBool("isAttacking", true);
+                            yield return new WaitForSeconds(1f);
+                            //摄像机抖动
+                            Camera.main.DOShakePosition(0.1f, 1.5f, 5, 45);
                             FightManager.Instance.GetPlayHit(enemyInstance.Attack);
-                        }
+                            fire1.SetActive(false);
+                        }*/
                     }
                     else
                     {
+                        fire2.SetActive(true);
+                        fire2Ani.SetBool("isAttacking", true);
+                        yield return new WaitForSeconds(1f);
+                        //摄像机抖动
+                        Camera.main.DOShakePosition(0.1f, 1.5f, 5, 45);
                         FightManager.Instance.GetPlayHit(enemyInstance.Attack);
+                        fire2.SetActive(false);
                     }
                 }
-
-                ani.SetBool("isAttacking", false);
                 break;
         }
 
-        //等待动画播放完，这里时间也可以配置
-        yield return new WaitForSeconds(1);
-
         HideEnemyActionText();
-        enemyInstance.HideAction();
     }
 
     public void ShowEnemyActionText(Enemy enemyInstance,ActionType TypeIn)

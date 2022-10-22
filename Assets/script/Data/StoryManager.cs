@@ -46,16 +46,18 @@ public class StoryManager : MonoBehaviour
 
     private void ChangeDialogue()
     {
-        dialogue = DialogueData[CurCount.ToString()];
-        dialogueText.GetComponent<Text>().text = dialogue;
-        CurCount += 1;
-
         //所有剧情文案加载完毕
-        if (CurCount >= MaxCount+1)
+        if (CurCount > MaxCount)
         {
             button.gameObject.SetActive(false);
             Invoke("GoToGame", 1f);
         }
+
+        dialogue = DialogueData[CurCount.ToString()];
+        dialogueText.GetComponent<Text>().text = dialogue;
+        CurCount += 1;
+
+
     }
 
     private void GoToGame()
