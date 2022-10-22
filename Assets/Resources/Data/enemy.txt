@@ -1,7 +1,7 @@
-Id	Name	Hp	Attack	Defend	Model
-Id	����	Ѫ��	������	������	�����ģ��·��
-10000	������Ȯ	10	5	5	EnemyModel/level0/EnemyWaiting
-10001	��С��	10	5	10	EnemyModel/level1/EnemyWaiting
-10002	ȭͷ��	30	2	5	EnemyModel/level2/EnemyWaiting
-10003	����	10	5	20	EnemyModel/level3/EnemyWaiting
-10004	����ʹ	20	5	20	EnemyModel/level4/EnemyWaiting
+Id	Name	Hp	Attack	Defend	Model	EnemyAction-Defend	EnemyAction-Attack
+Id	名字	血量	攻击力	防御盾	怪物的模型路径	怪物行为-防御	怪物行为-攻击
+10000	赛博猎犬	15	5	5	EnemyModel/level0/EnemyWaiting	敌方获得了护甲！	敌方对你造成了伤害！
+10001	打交小兵	20	7	5	EnemyModel/level1/EnemyWaiting	敌方获得了护甲！	敌方对你造成了伤害！
+10002	拳头哥	40	5	10	EnemyModel/level2/EnemyWaiting	敌方恢复了生命值！	敌方对你造成了伤害，并恢复了生命值！
+10003	刀哥	10	5	20	EnemyModel/level3/EnemyWaiting	敌方获得了护甲！并对你造成了伤害！	敌方对你造成了大量伤害！
+10004	猎天使	20	10	20	EnemyModel/level4/EnemyWaiting	敌方恢复了生命值，并获得了护甲！	敌方对你造成了伤害！

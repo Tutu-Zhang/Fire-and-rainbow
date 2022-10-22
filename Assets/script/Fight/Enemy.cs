@@ -27,6 +27,10 @@ public class Enemy : MonoBehaviour
     public Text hpText;
     public Image hpImg;
     public Image hpHitImg;
+    //public Image defImg;
+    //public Image defHitImg;
+    public string AtkAction;
+    public string DefAction;
 
     //数值相关(这部分数值存储在txt中
     public int Defend;
@@ -67,7 +71,8 @@ public class Enemy : MonoBehaviour
         hpText = hpItemObj.transform.Find("EnemyHPText").GetComponent<Text>();
         hpImg = hpItemObj.transform.Find("EnemyHPFill").GetComponent<Image>();//找到血条图标
         hpHitImg = hpItemObj.transform.Find("EnemyHitHPFill").GetComponent<Image>();//找到血条图标
-
+        //defImg = hpItemObj.transform.Find("EnemyDEFFill").GetComponent<Image>();
+        //defHitImg = hpItemObj.transform.Find("EnemyHitDEFFill").GetComponent<Image>();
 
 
         //设置血条位置|在素材里预设好，应该就不用这个步骤了吧
@@ -81,6 +86,9 @@ public class Enemy : MonoBehaviour
         CurHp = int.Parse(data["Hp"]);
         MaxHp = CurHp;
         Defend = int.Parse(data["Defend"]);
+        AtkAction = data["EnemyAction-Attack"];
+        DefAction = data["EnemyAction-Defend"];
+
 
         UpdateHp();
         UpdateDefend();
@@ -107,7 +115,7 @@ public class Enemy : MonoBehaviour
         while (hpHitImg.fillAmount > hpImg.fillAmount)
         {
             hpHitImg.fillAmount -= 0.005f;
-            yield return new WaitForSeconds(0.04f);
+            yield return new WaitForSeconds(0.02f);
         }
 
         hpHitImg.fillAmount = hpImg.fillAmount;
@@ -118,7 +126,21 @@ public class Enemy : MonoBehaviour
     public void UpdateDefend()
     {
         defText.text = Defend.ToString();
+        //defImg.fillAmount = (float)CurHp / (float)MaxHp;
+        //StartCoroutine(ChangeEnemyDefHitFill());
     }
+
+/*    public IEnumerator ChangeEnemyDefHitFill()
+    {
+        while (defHitImg.fillAmount > defImg.fillAmount)
+        {
+            defHitImg.fillAmount -= 0.005f;
+            yield return new WaitForSeconds(0.02f);
+        }
+
+        hpHitImg.fillAmount = hpImg.fillAmount;
+        yield break;
+    }*/
 
     //敌人被选中时显示红边
     public void OnSelect()
@@ -176,7 +198,7 @@ public class Enemy : MonoBehaviour
                     EnemyManager.Instance.DeleteEnemy(this);
 
                     //删除敌人的模型
-                    Destroy(gameObject, 1);
+                    Destroy(gameObject);
                     Destroy(actionObj);
                     Destroy(hpItemObj);
                 }
@@ -246,22 +268,5 @@ public class Enemy : MonoBehaviour
         type = (ActionType)ran;
 
         //type = ActionType.Attack;
-
-        switch (type)
-        {
-/*            case ActionType.None:
-                //设置图标不显示
-                attackTf.gameObject.SetActive(false);
-                defendTf.gameObject.SetActive(false);
-                break;*/
-            case ActionType.Defend:
-                attackTf.gameObject.SetActive(false);
-                defendTf.gameObject.SetActive(true);
-                break;
-            case ActionType.Attack:
-                attackTf.gameObject.SetActive(true);
-                defendTf.gameObject.SetActive(false);
-                break;
-        }
     }
 }
