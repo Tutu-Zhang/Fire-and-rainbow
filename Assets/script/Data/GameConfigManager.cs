@@ -21,6 +21,8 @@ public class GameConfigManager
 
     private GameConfigData DialogueAfterData;
 
+    private GameConfigData BuffDescriptionData;
+
     private TextAsset textAsset;
 
     //初始化配置文件（txt 存储到内存中）
@@ -47,6 +49,9 @@ public class GameConfigManager
 
         textAsset = Resources.Load<TextAsset>("Data/DialogueAfter");
         DialogueAfterData = new GameConfigData(textAsset.text);
+
+        textAsset = Resources.Load<TextAsset>("Data/BuffDes");
+        BuffDescriptionData = new GameConfigData(textAsset.text);
     }
 
     public List<Dictionary<string,string>> GetCardLines()
@@ -108,5 +113,10 @@ public class GameConfigManager
     public Dictionary<string, string> GetDialogueAfterDataById(string id)
     {
         return DialogueAfterData.GetOneById(id);
+    }
+
+    public Dictionary<string, string> GetBuffDesById(string id)
+    {
+        return BuffDescriptionData.GetOneById(id);
     }
 }

@@ -20,6 +20,7 @@ public class FightUI : UIBase
     private GameObject cardZone;
     private GameObject cardArea;
     private GameObject enemyCase;
+    private GameObject BuffDescription;
     private String skillText = "技能描述";
 
     private List<CardItem> cardItemList; //手牌区集合
@@ -158,6 +159,10 @@ public class FightUI : UIBase
         turnBtn.gameObject.SetActive(false);
         UseBtn = GameObject.Find("UseBtn").GetComponent<Button>();
         UseBtn.gameObject.SetActive(false);
+
+        BuffDescription = transform.Find("BuffDescription").gameObject;
+
+        BuffDescription.AddComponent<BuffDescription>();
 
         //获取回合切换按钮
         turnBtn.onClick.AddListener(onChangeTurnBtn);
@@ -388,6 +393,11 @@ public class FightUI : UIBase
             BuffList[i].PassTurn();
         }
     }
+
+    public List<BuffItem> returnBuffList()
+    {
+        return BuffList;
+    } 
 
     //清空所有卡牌
     public void RemoveAllCards(bool ifInPlayArea)
