@@ -22,9 +22,7 @@ public class StoryManager : MonoBehaviour
     public void Start()
     {
         GameConfigManager.Instance.Init();
-        if(LevelManager.Instance)
-            levelCount = LevelManager.Instance.level;
-        //levelCount = 1;//调试用
+        levelCount = LevelManager.Instance.level;
 
         //改变背景图物体
         BackgroundImg = GameObject.FindGameObjectWithTag("DialogueBackground").GetComponent<Image>();

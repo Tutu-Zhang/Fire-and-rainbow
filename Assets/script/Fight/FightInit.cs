@@ -20,10 +20,7 @@ public class FightInit : FightUnit
         //º”‘ÿ’Ω∂∑‘™Àÿ
         UIManager.Instance.ShowUI<FightUI>("fightBackground");
 
-        int levelCount = -1;
-
-        if(LevelManager.Instance != null)
-            levelCount = LevelManager.Instance.level;
+        int levelCount = LevelManager.Instance.level;
 
 
         //int levelCount = 0;

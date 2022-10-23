@@ -25,8 +25,7 @@ public class LetterManager : MonoBehaviour
         AudioManager.Instance.PlayBGM("舒缓Radiohead - No Surprises");
 
         GameConfigManager.Instance.Init();
-        if(LevelManager.Instance)
-            levelCount = LevelManager.Instance.level;
+        levelCount = LevelManager.Instance.level;
         //levelCount = 1;//调试用
 
         //改变背景图物体

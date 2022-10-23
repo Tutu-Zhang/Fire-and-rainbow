@@ -6,12 +6,19 @@ using UnityEngine.UI;
 public class DifficultyManager : MonoBehaviour
 {
     GameObject DiffText;
+    public float DiffCount;
 
     private void Awake()
     {
+        DiffCount = LevelManager.Instance.diffCount;
+
+        Debug.Log(DiffCount);
+
         DiffText = transform.Find("дя╤х").gameObject;
 
         Slider difSlider = transform.Find("DifficultSlider").GetComponent<Slider>();
+
+        difSlider.value = DiffCount;
 
         difSlider.onValueChanged.AddListener(ChangeDifficulity);
     }
@@ -40,5 +47,7 @@ public class DifficultyManager : MonoBehaviour
             LevelManager.Instance.AttackFix = 0;
             LevelManager.Instance.DefFix = 0;
         }
+
+        LevelManager.Instance.diffCount = value;
     }
 }

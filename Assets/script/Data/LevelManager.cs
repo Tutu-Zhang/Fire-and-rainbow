@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour
     public int level;
     public int AttackFix;
     public int DefFix;
+    public float diffCount;
 
     private void Awake()
     {
@@ -17,5 +18,6 @@ public class LevelManager : MonoBehaviour
         level = -1;
         AttackFix = 5;
         DefFix = 5;
+        diffCount = 0.5f;
     }
 }
