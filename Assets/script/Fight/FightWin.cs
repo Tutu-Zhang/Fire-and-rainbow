@@ -12,9 +12,21 @@ public class FightWin : FightUnit
     {
         FightManager.Instance.StopAllCoroutines();
         Debug.Log("游戏胜利");
-        AudioManager.Instance.StopBGM();
-
+        AudioManager.Instance.StopBGM();        
         AudioManager.Instance.PlayEffect("胜利");
+
+        //保存通关数据
+        if (LevelManager.Instance.level == 0)
+        {
+            PlayerPrefs.SetString("lv0Passed", "yes");
+        }
+        else
+        {
+            PlayerPrefs.SetString("lv" + LevelManager.Instance.level.ToString() + "Passed", "yes");
+        }
+        
+        PlayerPrefs.Save();
+
         Invoke("ShowWindow", 1f);
     }
 

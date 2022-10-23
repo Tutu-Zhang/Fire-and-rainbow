@@ -9,6 +9,12 @@ public class LoginUI : UIBase
 {
     private void Start()
     {
+        //如果一次都没有进行存档，那么初始化数据，并将是否存档标记位yes
+        if (PlayerPrefs.GetString("ifSaved","noSave") == "noSave")
+        {
+            SaveAndLoad_Init();
+        }
+
         Register("beginButton").onClick = onStartGameBtn;
 
         if (!AudioManager.Instance.isPlayingBeginBGM)
@@ -21,15 +27,36 @@ public class LoginUI : UIBase
 
     private void onStartGameBtn(GameObject obj,PointerEventData pData)
     {
-        /*//通过关闭开始界面来实现跳转页面
-        Hide();
-
-        //加载并显示选择界面
-        UIManager.Instance.ShowUI<SelectUI>("SelectUI");*/
 
         AudioManager.Instance.PlayEffect("按钮");
-        
-        //跳转到关卡选择场景
-        SceneManager.LoadScene("selectScene");
+        Debug.Log("lv0: " + PlayerPrefs.GetString("lv0Passed"));
+
+        if (PlayerPrefs.GetString("lv0Passed") == "no")
+        {
+            LevelManager.Instance.level = 0;
+
+            SceneManager.LoadScene("BeforeGame");
+        }
+        else
+        {
+            //跳转到关卡选择场景
+            SceneManager.LoadScene("selectScene");
+        }
+
+    }
+
+    private void SaveAndLoad_Init()
+    {
+        PlayerPrefs.SetString("ifSaved", "yes");
+
+        PlayerPrefs.SetString("lv0Passed", "no");
+        PlayerPrefs.SetString("lv1Passed", "no");
+        PlayerPrefs.SetString("lv2Passed", "no");
+        PlayerPrefs.SetString("lv3Passed", "no");
+        PlayerPrefs.SetString("lv4Passed", "no");
+
+        PlayerPrefs.Save();
+
+
     }
 }

@@ -92,7 +92,7 @@ public class FightManager : MonoBehaviour
     //ÕÊº“ ‹…À¬ﬂº≠
     public void GetPlayHit(int hit)
     {
-        int this_hit = hit;
+        int this_hit = hit + LevelManager.Instance.AttackFix;
 
         if (UIManager.Instance.GetUI<FightUI>("fightBackground").FindBuff("0111") != null)
         {

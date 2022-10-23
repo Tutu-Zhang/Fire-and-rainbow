@@ -29,7 +29,7 @@ public class EnemySkill : MonoBehaviour
                 break;
 
             case ActionType.Defend:
-                enemyInstance.Defend += 5;
+                enemyInstance.Defend += 5 + LevelManager.Instance.DefFix;
                 enemyInstance.UpdateDefend();
                 break;
 
@@ -90,7 +90,7 @@ public class EnemySkill : MonoBehaviour
                 AudioManager.Instance.PlayEffect("护甲");
                 yield return new WaitForSeconds(1);
 
-                enemyInstance.Defend += 7;
+                enemyInstance.Defend += 7 + LevelManager.Instance.DefFix;
                 enemyInstance.UpdateDefend();
 
                 ani.SetBool("isDefending", false);
@@ -138,8 +138,10 @@ public class EnemySkill : MonoBehaviour
 
             case ActionType.Defend:
                 enemyInstance.CurHp += 10;
+                enemyInstance.Defend += LevelManager.Instance.DefFix;
                 AudioManager.Instance.PlayEffect("回复");
                 enemyInstance.UpdateHp();
+                enemyInstance.UpdateDefend();
                 break;
 
             case ActionType.Attack:
@@ -155,6 +157,7 @@ public class EnemySkill : MonoBehaviour
                 ani.SetBool("isAttacking", false);
 
                 enemyInstance.CurHp += 5;
+                enemyInstance.Defend += LevelManager.Instance.DefFix;
                 enemyInstance.UpdateHp();
                 break;
         }
@@ -185,7 +188,7 @@ public class EnemySkill : MonoBehaviour
                 break;
 
             case ActionType.Defend:
-                enemyInstance.Defend += 10;
+                enemyInstance.Defend += 10 + LevelManager.Instance.DefFix;
                 AudioManager.Instance.PlayEffect("护甲");
                 enemyInstance.UpdateDefend();
                 yield return new WaitForSeconds(1f);
@@ -231,7 +234,8 @@ public class EnemySkill : MonoBehaviour
         enemyInstance.HideAction();
     }
 
-    //天使：若天使护甲值不为0，造成固定伤害；若护甲值为0，且玩家血量>1，则将玩家打到1点血(50%概率发动)或是造成固定伤害（50%概率发动）；若玩家血量=1，则造成固定伤害（击杀玩家
+    //天使：若天使护甲值不为0，造成固定伤害；若护甲值为0，且玩家血量>1，则将玩家打到1点血；若玩家血量=1，则造成固定伤害（击杀玩家
+    //当天使生命值降为0时，获得100点护甲，并在下回合恢复20生命值20护甲值。天使有4条命（也可能是5条，记不清了
     public IEnumerator EnemyActio4(Enemy enemyInstance, ActionType typeIn)
     {
         //获取敌人动画控件
@@ -284,7 +288,7 @@ public class EnemySkill : MonoBehaviour
 
                 break;
             case ActionType.Defend:
-                enemyInstance.Defend += 5;
+                enemyInstance.Defend += 5 + LevelManager.Instance.DefFix;
                 enemyInstance.CurHp += 5;
 
                 AudioManager.Instance.PlayEffect("护甲");

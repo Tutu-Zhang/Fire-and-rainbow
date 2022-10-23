@@ -17,6 +17,14 @@ public class go_to_game1 : MonoBehaviour
         AudioManager.Instance.PlayEffect("°´Å¥");
         LevelManager.Instance.level = 1;
 
-        SceneManager.LoadScene("BeforeGame");
+        if (PlayerPrefs.GetString("lv0Passed") == "yes")
+        {
+            SceneManager.LoadScene("BeforeGame");
+        }
+        else
+        {
+            GameObject obj = GameObject.Find("/Canvas/GameWindow/Tips");
+            obj.SetActive(true);
+        }
     }
 }
