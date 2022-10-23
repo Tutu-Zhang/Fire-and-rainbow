@@ -11,9 +11,9 @@ public class FightPlayerTurn : FightUnit
 
         UIManager.Instance.ShowTip("玩家回合", Color.green, delegate ()
         {
+            UIManager.Instance.GetUI<FightUI>("fightBackground").refreshBuff();
 
-
-            //回合前就执行效果的判定阶段,对于玩家,只有0101
+            //回合前就执行效果的判定阶段
             //BuffItem buff_1 = UIManager.Instance.GetUI<FightUI>("fightBackground").FindBuff("0101");
             if (UIManager.Instance.GetUI<FightUI>("fightBackground").FindBuff("0101") != null)
             {
@@ -24,7 +24,7 @@ public class FightPlayerTurn : FightUnit
             {
                 BuffEffects.MatchBuff("0010");
             }
-
+            UIManager.Instance.GetUI<FightUI>("fightBackground").BuffPassTurn();
 
 
             //抽牌

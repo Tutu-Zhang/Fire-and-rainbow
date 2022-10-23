@@ -79,7 +79,7 @@ public class FightManager : MonoBehaviour
         fightUnit.Init();
         if(type == FightType.Player)
         {
-            UIManager.Instance.GetUI<FightUI>("fightBackground").BuffPassTurn();
+
             TurnCount++;
         }
     }

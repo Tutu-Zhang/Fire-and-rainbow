@@ -38,7 +38,7 @@ public class BuffDescription : MonoBehaviour, IPointerClickHandler
         
     }
 
-    public void ShowBuffText()
+    private void ShowBuffText()
     {
         List<BuffItem> bufflist = fightUI.returnBuffList();
 
@@ -48,11 +48,45 @@ public class BuffDescription : MonoBehaviour, IPointerClickHandler
 
         for (int i = 0; i < bufflist.Count; i++)
         {
-            buffText += bufflist[i].GetBuffId() +":"+ BuffDesData[bufflist[i].GetBuffId()] + ",剩余" + bufflist[i].GetLeftTime() + "回合"+"\n\n";
+            if (bufflist[i].GetBuffId() == "1110")
+            {
+                buffText += bufflist[i].GetBuffId() + ":" + BuffDesData[bufflist[i].GetBuffId()] + "\n\n";
+            }
+            else
+            {
+                buffText += bufflist[i].GetBuffId() + ":" + BuffDesData[bufflist[i].GetBuffId()] + ",剩余" + bufflist[i].GetLeftTime() + "回合" + "\n\n";
+            }
         }
 
         Case.SetActive(true);
         buffContent.text = buffText;
+
+    }
+
+    public void RefreshBuffText()
+    {
+        List<BuffItem> bufflist = fightUI.returnBuffList();
+
+
+        string buffText = "";
+
+        Dictionary<string, string> BuffDesData = GameConfigManager.Instance.GetBuffDesById("1");
+
+        for (int i = 0; i < bufflist.Count; i++)
+        {
+            if (bufflist[i].GetBuffId() == "1110")
+            {
+                buffText += bufflist[i].GetBuffId() + ":" + BuffDesData[bufflist[i].GetBuffId()] + "\n\n";
+            }
+            else
+            {
+                buffText += bufflist[i].GetBuffId() + ":" + BuffDesData[bufflist[i].GetBuffId()] + ",剩余" + bufflist[i].GetLeftTime() + "回合" + "\n\n";
+            }
+        }
+
+        buffContent.text = buffText;
+
+        Debug.Log("刷新BUff");
 
     }
 

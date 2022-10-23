@@ -33,6 +33,10 @@ public class FightUI : UIBase
         cardItemList = new List<CardItem>();
         PlayCardList = new List<CardItem>();
         BuffList = new List<BuffItem>();
+        BuffList.Clear();
+
+        BuffDescription = transform.Find("BuffDescription").gameObject;
+        BuffDescription.AddComponent<BuffDescription>();
     }
 
     //玩家回合结束，切换到敌人回合
@@ -71,6 +75,7 @@ public class FightUI : UIBase
             //RemoveAllCards(true);//为true时为移除出牌区卡片，false时移除手牌区
             CardEffects.MatchCard(cardId); //Matchcard顺便就执行卡的效果
            StartCoroutine(UseCardEffects(cardId));
+            BuffDescription.GetComponent<BuffDescription>().RefreshBuffText();
         }
     }
 
@@ -161,10 +166,6 @@ public class FightUI : UIBase
         turnBtn.gameObject.SetActive(false);
         UseBtn = GameObject.Find("UseBtn").GetComponent<Button>();
         UseBtn.gameObject.SetActive(false);
-
-        BuffDescription = transform.Find("BuffDescription").gameObject;
-
-        BuffDescription.AddComponent<BuffDescription>();
 
         //获取回合切换按钮
         turnBtn.onClick.AddListener(onChangeTurnBtn);
@@ -390,11 +391,17 @@ public class FightUI : UIBase
     //让所有的buff剩余轮次减一
     public void BuffPassTurn()
     {
-        for(int i = 0; i < BuffList.Count; i++)
+        for(int i = BuffList.Count - 1; i >= 0; i--)
         {
             BuffList[i].PassTurn();
         }
-        BuffDescription.GetComponent<BuffDescription>().ShowBuffText();
+
+        refreshBuff();
+    }
+
+    public void refreshBuff()
+    {
+        BuffDescription.GetComponent<BuffDescription>().RefreshBuffText(); ;
     }
 
     public List<BuffItem> returnBuffList()
