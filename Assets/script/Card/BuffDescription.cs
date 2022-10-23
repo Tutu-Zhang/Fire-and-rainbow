@@ -38,7 +38,7 @@ public class BuffDescription : MonoBehaviour, IPointerClickHandler
         
     }
 
-    private void ShowBuffText()
+    public void ShowBuffText()
     {
         List<BuffItem> bufflist = fightUI.returnBuffList();
 

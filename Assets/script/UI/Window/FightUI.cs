@@ -394,6 +394,7 @@ public class FightUI : UIBase
         {
             BuffList[i].PassTurn();
         }
+        BuffDescription.GetComponent<BuffDescription>().ShowBuffText();
     }
 
     public List<BuffItem> returnBuffList()
