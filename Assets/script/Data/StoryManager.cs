@@ -46,6 +46,8 @@ public class StoryManager : MonoBehaviour
 
     private void ChangeDialogue()
     {
+        AudioManager.Instance.PlayEffect("按钮2");
+
         //所有剧情文案加载完毕
         if (CurCount > MaxCount)
         {

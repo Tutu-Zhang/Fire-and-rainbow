@@ -130,13 +130,13 @@ public class CardEffects
 
     public static void recover_0110()
     {
-        FightManager.Instance.GetRecover(4);
+        FightManager.Instance.GetRecover(6);
 
         System.Random random = new System.Random();
         double temp = random.NextDouble();
         if(temp >= 0.5)
         {
-            FightManager.Instance.GetRecover(4);
+            FightManager.Instance.GetRecover(6);
         }
     }
 

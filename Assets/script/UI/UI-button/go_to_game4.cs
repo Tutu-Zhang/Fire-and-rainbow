@@ -14,7 +14,7 @@ public class go_to_game4 : MonoBehaviour
     }
     private void GotoNew()
     {
-
+        AudioManager.Instance.PlayEffect("°´Å¥");
         LevelManager.Instance.level = 4;
 
         SceneManager.LoadScene("BeforeGame");

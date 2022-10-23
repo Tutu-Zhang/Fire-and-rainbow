@@ -86,13 +86,20 @@ public class EnemySkill : MonoBehaviour
                 break;
             
             case ActionType.Defend:
+                ani.SetBool("isDefending", true);
+                AudioManager.Instance.PlayEffect("护甲");
+                yield return new WaitForSeconds(1);
+
                 enemyInstance.Defend += 7;
                 enemyInstance.UpdateDefend();
+
+                ani.SetBool("isDefending", false);
                 break;
             
             case ActionType.Attack:
                 Debug.Log("敌人行动");
                 ani.SetBool("isAttacking", true);
+                AudioManager.Instance.PlayEffect("枪哥攻击");
                 //等待攻击动画播放完，这里时间也可以配置
                 yield return new WaitForSeconds(1);
                 //摄像机抖动(现在不抖动
@@ -131,16 +138,18 @@ public class EnemySkill : MonoBehaviour
 
             case ActionType.Defend:
                 enemyInstance.CurHp += 10;
+                AudioManager.Instance.PlayEffect("回复");
                 enemyInstance.UpdateHp();
                 break;
 
             case ActionType.Attack:
                 Debug.Log("敌人行动");
-                ani.SetBool("isAttacking", true);
+                ani.SetBool("isAttacking", true);                
                 //等待攻击动画播放完，这里时间也可以配置
                 yield return new WaitForSeconds(1);
                 //摄像机抖动
                 Camera.main.DOShakePosition(0.1f, 1f, 5, 45);
+                AudioManager.Instance.PlayEffect("拳头攻击");
                 //玩家扣血
                 FightManager.Instance.GetPlayHit(enemyInstance.Attack + FightManager.Instance.TurnCount);
                 ani.SetBool("isAttacking", false);
@@ -177,9 +186,13 @@ public class EnemySkill : MonoBehaviour
 
             case ActionType.Defend:
                 enemyInstance.Defend += 10;
+                AudioManager.Instance.PlayEffect("护甲");
                 enemyInstance.UpdateDefend();
-                
+                yield return new WaitForSeconds(1f);
+
                 ani.SetBool("isAttacking", true);
+
+                AudioManager.Instance.PlayEffect("刀哥攻击");
                 //等待攻击动画播放完，这里时间也可以配置
                 yield return new WaitForSeconds(0.5f);
                 //摄像机抖动(现在不抖动
@@ -191,6 +204,7 @@ public class EnemySkill : MonoBehaviour
 
             case ActionType.Attack:
                 ani.SetBool("isAttacking", true);
+                AudioManager.Instance.PlayEffect("刀哥攻击1");
                 //等待攻击动画播放完，这里时间也可以配置
                 yield return new WaitForSeconds(0.5f);
                 //摄像机抖动(现在不抖动
@@ -261,14 +275,19 @@ public class EnemySkill : MonoBehaviour
             enemyInstance.UpdateHp();
 
             enemyInstance.ifLv4BossConsumeLives = false;
-            typeIn = ActionType.Attack;
+            typeIn = ActionType.None;
         }
 
         switch (typeIn)
         {
+            case ActionType.None:
+
+                break;
             case ActionType.Defend:
                 enemyInstance.Defend += 5;
                 enemyInstance.CurHp += 5;
+
+                AudioManager.Instance.PlayEffect("护甲");
                 enemyInstance.UpdateDefend();
                 enemyInstance.UpdateHp();
                 break;
@@ -281,6 +300,7 @@ public class EnemySkill : MonoBehaviour
                 {
                     fire1.SetActive(true);
                     fire1Ani.SetBool("isAttacking", true);
+                    AudioManager.Instance.PlayEffect("天使激光");
                     yield return new WaitForSeconds(1.2f);
                     //摄像机抖动
                     Camera.main.DOShakePosition(0.1f, 1.2f, 5, 45);
@@ -292,33 +312,35 @@ public class EnemySkill : MonoBehaviour
                 {
                     if (FightManager.Instance.CurHP > 1)
                     {
-/*                        int ran = Random.Range(0, 1);
+                        int ran = Random.Range(0, 1);
 
                         if (ran > 0.2)
-                        {*/
+                        {
                             fire2.SetActive(true);
                             fire2Ani.SetBool("isAttacking", true);
+                            AudioManager.Instance.PlayEffect("天使大激光");
                             yield return new WaitForSeconds(1f);
                             //摄像机抖动
                             Camera.main.DOShakePosition(0.1f, 1.5f, 5, 45);
                             FightManager.Instance.GetPlayHit(FightManager.Instance.CurHP + FightManager.Instance.DefCount - 1);
                             fire2.SetActive(false);
-/*                        }
+                        }
                         else
                         {
-                            fire1.SetActive(true);
-                            fire1Ani.SetBool("isAttacking", true);
+                            fire2.SetActive(true);
+                            fire2Ani.SetBool("isAttacking", true);
                             yield return new WaitForSeconds(1f);
                             //摄像机抖动
                             Camera.main.DOShakePosition(0.1f, 1.5f, 5, 45);
                             FightManager.Instance.GetPlayHit(enemyInstance.Attack);
-                            fire1.SetActive(false);
-                        }*/
+                            fire2.SetActive(false);
+                        }
                     }
                     else
                     {
                         fire2.SetActive(true);
                         fire2Ani.SetBool("isAttacking", true);
+                        AudioManager.Instance.PlayEffect("天使大激光");
                         yield return new WaitForSeconds(1f);
                         //摄像机抖动
                         Camera.main.DOShakePosition(0.1f, 1.5f, 5, 45);

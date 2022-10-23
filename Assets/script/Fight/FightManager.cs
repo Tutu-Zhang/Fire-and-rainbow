@@ -144,6 +144,7 @@ public class FightManager : MonoBehaviour
 
     public void GetRecover(int recover)
     {
+        AudioManager.Instance.PlayEffect("回复");
         CurHP += recover;
         if (CurHP > MaxHP)
             CurHP = MaxHP;
@@ -154,6 +155,7 @@ public class FightManager : MonoBehaviour
 
     public void GetDefendRecover(int recover)
     {
+        AudioManager.Instance.PlayEffect("护甲");
         DefCount += recover;
 
         UIManager.Instance.GetUI<FightUI>("fightBackground").UpdateHP();
@@ -162,6 +164,7 @@ public class FightManager : MonoBehaviour
 
     public void Attack_Enemy(int val)
     {
+        AudioManager.Instance.PlayEffect("玩家攻击");
         ////专判1111buff   
         Debug.Log("AttackEnemy执行");
         if (UIManager.Instance.GetUI<FightUI>("fightBackground").FindBuff("1111") != null)

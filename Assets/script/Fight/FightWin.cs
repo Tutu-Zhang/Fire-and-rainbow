@@ -12,7 +12,9 @@ public class FightWin : FightUnit
     {
         FightManager.Instance.StopAllCoroutines();
         Debug.Log("游戏胜利");
-    
+        AudioManager.Instance.StopBGM();
+
+        AudioManager.Instance.PlayEffect("胜利");
         Invoke("ShowWindow", 1f);
     }
 
@@ -29,11 +31,13 @@ public class FightWin : FightUnit
 
     private void GoToSelectScence()
     {
+        AudioManager.Instance.PlayEffect("按钮2");
         SceneManager.LoadScene("selectScene");
     }
 
     private void GoToAfterGameScence()
     {
+        AudioManager.Instance.PlayEffect("按钮2");
         SceneManager.LoadScene("AfterGame");
     }
 

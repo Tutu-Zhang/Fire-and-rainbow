@@ -13,6 +13,7 @@ public class go_to_begin : MonoBehaviour
     }
     private void GotoNew()
     {
+        AudioManager.Instance.PlayEffect("°´Å¥");
         SceneManager.LoadScene("beginScene");
     }
 }

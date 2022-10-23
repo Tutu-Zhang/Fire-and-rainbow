@@ -34,10 +34,12 @@ public class AudioManager : MonoBehaviour
         bgmSource.clip = clip;
 
         bgmSource.loop = isLoop;
+        
+        bgmSource.volume = 0.2f;
 
         bgmSource.Play();
 
-        if (name == "beginBGM")
+        if (name == "开场BGM")
         {
             isPlayingBeginBGM = true;
         }
@@ -46,13 +48,18 @@ public class AudioManager : MonoBehaviour
             isPlayingBeginBGM = false;
         }
         Debug.Log("设置后"+isPlayingBeginBGM);
-    }
 
+    }
+    public void StopBGM()
+    {
+        bgmSource = gameObject.GetComponent<AudioSource>();
+        bgmSource.volume = 0f;
+    }
     //播放音效
     public void PlayEffect(string name)
     {
         AudioClip clip = Resources.Load<AudioClip>("Sound/Effect/" + name);
 
-        AudioSource.PlayClipAtPoint(clip, transform.position);//在特定时间点播放
+        AudioSource.PlayClipAtPoint(clip, new Vector2(0,0),5);//在特定时间点播放
     }
 }

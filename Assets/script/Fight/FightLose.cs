@@ -12,6 +12,8 @@ public class FightLose : FightUnit
     {
         FightManager.Instance.StopAllCoroutines();
         Debug.Log("”Œœ∑ ß∞‹");
+        AudioManager.Instance.StopBGM();
+        AudioManager.Instance.PlayEffect(" ß∞‹");
 
         Invoke("ShowWindow", 1f);
 
@@ -30,11 +32,13 @@ public class FightLose : FightUnit
 
     private void GoToSelectScence()
     {
+        AudioManager.Instance.PlayEffect("∞¥≈•2");
         SceneManager.LoadScene("selectScene");
     }
 
     private void GoToReBuildGame()
     {
+        AudioManager.Instance.PlayEffect("∞¥≈•2");
         SceneManager.LoadScene("game1");
     }
 

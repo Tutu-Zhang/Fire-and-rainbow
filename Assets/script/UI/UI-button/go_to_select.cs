@@ -14,6 +14,7 @@ public class go_to_select : MonoBehaviour
     }
     private void GotoNew()
     {
+        AudioManager.Instance.PlayEffect("°´Å¥");
         SceneManager.LoadScene("selectScene");
     }
 }

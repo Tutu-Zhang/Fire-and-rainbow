@@ -15,8 +15,10 @@ public class quit : MonoBehaviour
     /*点击时触发*/
     private void OnClick()
     {
+        AudioManager.Instance.PlayEffect("按钮");
+
         #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
+        UnityEditor.EditorApplication.isPlaying = false;
         #else
             Application.Quit();
         #endif

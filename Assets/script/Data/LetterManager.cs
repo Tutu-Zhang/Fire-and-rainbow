@@ -21,6 +21,9 @@ public class LetterManager : MonoBehaviour
 
     public void Start()
     {
+        //播放BGM
+        AudioManager.Instance.PlayBGM("舒缓Radiohead - No Surprises");
+
         GameConfigManager.Instance.Init();
         if(LevelManager.Instance)
             levelCount = LevelManager.Instance.level;
@@ -46,6 +49,7 @@ public class LetterManager : MonoBehaviour
 
     private void ChangeDialogue()
     {
+        AudioManager.Instance.PlayEffect("按钮2");
 
         //所有剧情文案加载完毕
         if (CurCount > MaxCount)

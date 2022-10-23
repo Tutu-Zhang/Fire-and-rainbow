@@ -14,7 +14,7 @@ public class LoginUI : UIBase
         if (!AudioManager.Instance.isPlayingBeginBGM)
         {
             Debug.Log("LoginUI播放BGM");
-            AudioManager.Instance.PlayBGM("beginBGM");
+            AudioManager.Instance.PlayBGM("开场BGM");
         }
 
     }
@@ -27,7 +27,8 @@ public class LoginUI : UIBase
         //加载并显示选择界面
         UIManager.Instance.ShowUI<SelectUI>("SelectUI");*/
 
-
+        AudioManager.Instance.PlayEffect("按钮");
+        
         //跳转到关卡选择场景
         SceneManager.LoadScene("selectScene");
     }

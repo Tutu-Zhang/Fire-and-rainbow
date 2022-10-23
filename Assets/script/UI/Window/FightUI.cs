@@ -38,6 +38,7 @@ public class FightUI : UIBase
     //玩家回合结束，切换到敌人回合
     private void onChangeTurnBtn()
     {
+        AudioManager.Instance.PlayEffect("按钮2");
         //只有玩家才能切换
         if (FightManager.Instance.fightUnit is FightPlayerTurn)
         {
@@ -56,6 +57,7 @@ public class FightUI : UIBase
     //打出卡
     private void UseCard()
     {
+        AudioManager.Instance.PlayEffect("按钮2");
         if (FightManager.Instance.fightUnit is FightPlayerTurn)
         {
             string cardId = "";
@@ -182,7 +184,7 @@ public class FightUI : UIBase
     {
         hpText.text = FightManager.Instance.CurHP + "/" + FightManager.Instance.MaxHP;
         hpImage.fillAmount = (float)FightManager.Instance.CurHP / (float)FightManager.Instance.MaxHP;
-
+        
         StartCoroutine(ChangeHitFill());
     }
 

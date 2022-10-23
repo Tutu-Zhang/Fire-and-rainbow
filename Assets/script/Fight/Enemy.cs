@@ -183,6 +183,7 @@ public class Enemy : MonoBehaviour
                 {
                     CurHp = 1;
                     Defend += 100;
+                    AudioManager.Instance.PlayEffect("»¤¼×");
                     Lv4BossLives -= 1;
 
                     UpdateHp();

@@ -15,6 +15,7 @@ public class go_to_game2 : MonoBehaviour
     }
     private void GotoNew()
     {
+        AudioManager.Instance.PlayEffect("°´Å¥");
         LevelManager.Instance.level = 2;
 
         SceneManager.LoadScene("BeforeGame");

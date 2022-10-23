@@ -13,7 +13,7 @@ public class SelectUI : UIBase
             if (!AudioManager.Instance.isPlayingBeginBGM)
             {
                 Debug.Log("SelectUI²¥·ÅBGM");
-                AudioManager.Instance.PlayBGM("beginBGM");
+                AudioManager.Instance.PlayBGM("¿ª³¡BGM");
             }
     }
 }

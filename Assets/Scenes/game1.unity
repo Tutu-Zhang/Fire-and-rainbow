@@ -1260,6 +1260,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1904753138695044463, guid: 9833ac5127a62554c8a3e94e975bca8a, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 4bd4b5a8c7a7aa249a4da04130bc8871, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9833ac5127a62554c8a3e94e975bca8a, type: 3}
 --- !u!1001 &3451453354494718047

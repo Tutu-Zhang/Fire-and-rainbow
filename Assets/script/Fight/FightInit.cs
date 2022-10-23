@@ -14,12 +14,6 @@ public class FightInit : FightUnit
         //初始化战斗数值
         FightManager.Instance.Init();
 
-
-        //播放战斗bgm，这里只需要输入bgm的名字就可以
-        if (AudioManager.Instance != null)
-            AudioManager.Instance.PlayBGM("fightBGM");
-
-
         //初始化战斗卡牌数据
         FightCardManager.Instance.Init();
 
@@ -43,18 +37,33 @@ public class FightInit : FightUnit
 
             case 0:
                 EnemyManager.Instance.loadRes("10000");
+                //播放战斗bgm，这里只需要输入bgm的名字就可以
+                if (AudioManager.Instance != null)
+                    AudioManager.Instance.PlayBGM("教学关卡");
                 break;
             case 1:
                 EnemyManager.Instance.loadRes("10001");
+                //播放战斗bgm，这里只需要输入bgm的名字就可以
+                if (AudioManager.Instance != null)
+                    AudioManager.Instance.PlayBGM("小兵");
                 break;
             case 2:
                 EnemyManager.Instance.loadRes("10002");
+                //播放战斗bgm，这里只需要输入bgm的名字就可以
+                if (AudioManager.Instance != null)
+                    AudioManager.Instance.PlayBGM("拳头哥");
                 break;
             case 3:
                 EnemyManager.Instance.loadRes("10003");
+                //播放战斗bgm，这里只需要输入bgm的名字就可以
+                if (AudioManager.Instance != null)
+                    AudioManager.Instance.PlayBGM("刀哥");
                 break;
             case 4:
                 EnemyManager.Instance.loadRes("10004");
+                //播放战斗bgm，这里只需要输入bgm的名字就可以
+                if (AudioManager.Instance != null)
+                    AudioManager.Instance.PlayBGM("最后一关");
                 break;
         }
 
