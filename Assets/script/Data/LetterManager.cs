@@ -56,7 +56,8 @@ public class LetterManager : MonoBehaviour
             button.gameObject.SetActive(false);
             Invoke("GoToSelect", 1f);
         }
-
+        
+        Debug.Log(CurCount.ToString());
         dialogue = DialogueData[CurCount.ToString()];
         dialogueText.GetComponent<Text>().text = dialogue;
         CurCount += 1;

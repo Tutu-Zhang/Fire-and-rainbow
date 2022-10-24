@@ -30,6 +30,7 @@ public class EnemySkill : MonoBehaviour
 
             case ActionType.Defend:
                 enemyInstance.Defend += 5 + LevelManager.Instance.DefFix;
+                AudioManager.Instance.PlayEffect("护甲");
                 enemyInstance.UpdateDefend();
                 break;
 
@@ -38,6 +39,7 @@ public class EnemySkill : MonoBehaviour
                 ani.SetBool("isAttacking", true);
                 //等待攻击动画播放完，这里时间也可以配置
                 yield return new WaitForSeconds(1);
+                AudioManager.Instance.PlayEffect("概率成功2");
                 //摄像机抖动
                 Camera.main.DOShakePosition(0.1f, 1f, 5, 45);
                 //玩家扣血

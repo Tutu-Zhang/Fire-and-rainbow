@@ -163,11 +163,11 @@ public class CardEffects
         double temp = random.NextDouble();
         if (temp >= 0.5)
         {
-            FightManager.Instance.Attack_Enemy(8);
+            FightManager.Instance.Attack_Enemy(12);
         }
         else
         {
-            FightManager.Instance.Attack_Enemy(4);
+            FightManager.Instance.Attack_Enemy(6);
         }
     }
 

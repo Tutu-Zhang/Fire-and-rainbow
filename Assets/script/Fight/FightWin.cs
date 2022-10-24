@@ -10,6 +10,12 @@ public class FightWin : FightUnit
 
     public override void Init()
     {
+        //如果第四关胜利，则触发战胜剧情，否则触发战败剧情
+        if (LevelManager.Instance.level == 4)
+        {
+            LevelManager.Instance.level = 5;
+        }
+
         FightManager.Instance.StopAllCoroutines();
         Debug.Log("游戏胜利");
         AudioManager.Instance.StopBGM();        
