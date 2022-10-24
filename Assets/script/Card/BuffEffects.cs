@@ -75,11 +75,14 @@ public class BuffEffects
 
     public static void buff_attack_1011()
     {
-        FightManager.Instance.Attack_Enemy(4);
 
         System.Random random = new System.Random();
         double temp = random.NextDouble();
         if (temp >= 0.7)
+        {
+            FightManager.Instance.Attack_Enemy(8);
+        }
+        else
         {
             FightManager.Instance.Attack_Enemy(4);
         }

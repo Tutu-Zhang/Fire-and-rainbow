@@ -159,13 +159,15 @@ public class CardEffects
 
     public static void attack_1010()
     {
-        FightManager.Instance.Attack_Enemy(6);
-
         System.Random random = new System.Random();
         double temp = random.NextDouble();
         if (temp >= 0.5)
         {
-            FightManager.Instance.Attack_Enemy(6);
+            FightManager.Instance.Attack_Enemy(8);
+        }
+        else
+        {
+            FightManager.Instance.Attack_Enemy(4);
         }
     }
 
