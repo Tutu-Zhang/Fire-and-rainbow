@@ -27,7 +27,6 @@ public class StoryManager : MonoBehaviour
         //改变背景图物体
         BackgroundImg = GameObject.FindGameObjectWithTag("DialogueBackground").GetComponent<Image>();
         imgPath = "UI-img/CG/" + levelCount.ToString() + "before";
-        Debug.Log(imgPath);
         Texture2D texture = Resources.Load<Texture2D>(imgPath);
         Sprite sp = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         BackgroundImg.sprite = sp;

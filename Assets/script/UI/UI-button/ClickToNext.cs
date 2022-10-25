@@ -17,6 +17,8 @@ public class ClickToNext : MonoBehaviour
         if (LevelManager.Instance.level == 0)
         {
             clickToNext_button.SetActive(true);
+            GameObject guideText = GameObject.Find("/Canvas/GameWindow/guide");
+            guideText.SetActive(true);
         }
 
         //很麻烦的写法，但是比再建一个txt简单多了
@@ -29,6 +31,7 @@ public class ClickToNext : MonoBehaviour
         PlayerPrefs.SetString("lv0guide7", "不同的敌人需要不同的策。熟悉技能效果，合理规划资源，使用智慧战胜敌人吧！（点击任意位置结束教程）");
         //PlayerPrefs.SetString("lv0guide0", "进入加密通话，已为您暂时屏蔽敌人");
         PlayerPrefs.Save();
+
 
         clickToNext_button.GetComponent<Button>().onClick.AddListener(NextGuide);
         
