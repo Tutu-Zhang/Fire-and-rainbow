@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour
     public int Attack;
     public int MaxHp;
     public int CurHp;
-    public int Lv4BossLives = 2;
+    public int Lv4BossLives = 3;
     public bool ifLv4BossConsumeLives = false;
 
     //组件相关
