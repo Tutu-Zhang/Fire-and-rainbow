@@ -28,7 +28,7 @@ public class GameConfigManager
     //初始化配置文件（txt 存储到内存中）
     public void Init()
     {
-        //读取卡牌，敌人等的数据
+        //读取卡牌，敌人等的数据       
         textAsset = Resources.Load<TextAsset>("Data/card");
         cardData = new GameConfigData(textAsset.text);
 
@@ -43,12 +43,6 @@ public class GameConfigManager
 
         textAsset = Resources.Load<TextAsset>("Data/playerSkill");
         playerSkill = new GameConfigData(textAsset.text);
-
-        textAsset = Resources.Load<TextAsset>("Data/DialogueBefore");
-        DialogueBeforeData = new GameConfigData(textAsset.text);
-
-        textAsset = Resources.Load<TextAsset>("Data/DialogueAfter");
-        DialogueAfterData = new GameConfigData(textAsset.text);
 
         textAsset = Resources.Load<TextAsset>("Data/BuffDes");
         BuffDescriptionData = new GameConfigData(textAsset.text);
@@ -69,15 +63,6 @@ public class GameConfigManager
         return levelData.GetLines();
     }
 
-    public List<Dictionary<string, string>> GetDialogueBeforeDatas()
-    {
-        return DialogueBeforeData.GetLines();
-    }
-
-    public List<Dictionary<string, string>> GetDialogueAfterDataData()
-    {
-        return DialogueAfterData.GetLines();
-    }
 
 
 
@@ -103,16 +88,6 @@ public class GameConfigManager
     public Dictionary<string, string> GetPlayerSkillsById(string id)
     {
         return playerSkill.GetOneById(id);
-    }
-
-    public Dictionary<string, string> GetDialogueBeforeDataById(string id)
-    {
-        return DialogueBeforeData.GetOneById(id);
-    }
-
-    public Dictionary<string, string> GetDialogueAfterDataById(string id)
-    {
-        return DialogueAfterData.GetOneById(id);
     }
 
     public Dictionary<string, string> GetBuffDesById(string id)

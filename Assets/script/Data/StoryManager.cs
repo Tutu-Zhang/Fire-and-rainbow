@@ -34,9 +34,9 @@ public class StoryManager : MonoBehaviour
 
 
         //获取旁白物体
-        dialogueText = GameObject.FindGameObjectWithTag("DialogueText");
-        DialogueData = GameConfigManager.Instance.GetDialogueBeforeDataById(levelCount.ToString());
-        MaxCount = int.Parse(DialogueData["count"]);
+        dialogueText = GameObject.FindGameObjectWithTag("DialogueText");        
+        MaxCount = int.Parse(ExcelReader.Instance.GetDialogue(levelCount,0,"before"));//获取对白数目
+        Debug.Log("共有"+MaxCount+"句话");
         ChangeDialogue();
 
         button.onClick.AddListener(ChangeDialogue);
@@ -53,7 +53,7 @@ public class StoryManager : MonoBehaviour
             Invoke("GoToGame", 1f);
         }
 
-        dialogue = DialogueData[CurCount.ToString()];
+        dialogue = ExcelReader.Instance.GetDialogue(levelCount, CurCount, "before");
         dialogueText.GetComponent<Text>().text = dialogue;
         CurCount += 1;
 

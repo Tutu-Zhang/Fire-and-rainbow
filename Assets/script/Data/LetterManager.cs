@@ -39,8 +39,8 @@ public class LetterManager : MonoBehaviour
 
         //获取旁白物体
         dialogueText = GameObject.FindGameObjectWithTag("DialogueText");
-        DialogueData = GameConfigManager.Instance.GetDialogueAfterDataById(levelCount.ToString());
-        MaxCount = int.Parse(DialogueData["count"]);
+        MaxCount = int.Parse(ExcelReader.Instance.GetDialogue(levelCount, 0, "after"));//获取对白数目
+        Debug.Log("共有" + MaxCount + "句话");
         ChangeDialogue();
 
         button.onClick.AddListener(ChangeDialogue);
@@ -56,9 +56,8 @@ public class LetterManager : MonoBehaviour
             button.gameObject.SetActive(false);
             Invoke("GoToSelect", 1f);
         }
-        
-        Debug.Log(CurCount.ToString());
-        dialogue = DialogueData[CurCount.ToString()];
+
+        dialogue = ExcelReader.Instance.GetDialogue(levelCount, CurCount, "after");
         dialogueText.GetComponent<Text>().text = dialogue;
         CurCount += 1;
 
