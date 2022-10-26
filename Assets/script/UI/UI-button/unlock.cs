@@ -14,18 +14,18 @@ public class unlock : MonoBehaviour
     }
     private void Unlock()
     {
-        PlayerPrefs.SetString("ifSaved", "noSave");
+        PlayerPrefs.SetString("ifSaved", "yesSave");
 
-        PlayerPrefs.SetString("lv0Passed", "no");
-        PlayerPrefs.SetString("lv1Passed", "no");
-        PlayerPrefs.SetString("lv2Passed", "no");
-        PlayerPrefs.SetString("lv3Passed", "no");
-        PlayerPrefs.SetString("lv4Passed", "no");
+        PlayerPrefs.SetString("lv0Passed", "yes");
+        PlayerPrefs.SetString("lv1Passed", "yes");
+        PlayerPrefs.SetString("lv2Passed", "yes");
+        PlayerPrefs.SetString("lv3Passed", "yes");
+        PlayerPrefs.SetString("lv4Passed", "yes");
 
         PlayerPrefs.Save();
 
-        Debug.Log(PlayerPrefs.GetString("ifSaved"));
-        Debug.Log("lv0: " + PlayerPrefs.GetString("lv0Passed"));
+        //Debug.Log(PlayerPrefs.GetString("ifSaved"));
+        //Debug.Log("lv0: " + PlayerPrefs.GetString("lv0Passed"));
 
 
     }

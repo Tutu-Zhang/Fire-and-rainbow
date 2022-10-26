@@ -246,14 +246,16 @@ public class EnemySkill : MonoBehaviour
 
         GameObject fire1 = GameObject.Find("/Canvas/天使攻击/巨炮待机");
         Animator fire1Ani = fire1.GetComponent<Animator>();
+        Debug.Log(fire1Ani.name);
 
         GameObject fire2 = GameObject.Find("/Canvas/天使攻击/六炮待机");
         Animator fire2Ani = fire2.GetComponent<Animator>();
+        Debug.Log(fire2Ani.name);
 
         System.Random random = new System.Random();
         double temp = random.NextDouble();
 
-        if (temp >0.3)
+        if (temp >0.2)
         {
             typeIn = ActionType.Attack;
         }
@@ -265,12 +267,14 @@ public class EnemySkill : MonoBehaviour
         //等待一段时间后执行行为
         yield return new WaitForSeconds(0.5f);//等待0.5秒
 
-        //显示敌人行为
+        //显示敌人行为 不执行？
         ShowEnemyActionText(enemyInstance, typeIn);
 
-        //判断是否消耗生命
+        Debug.Log(enemyInstance.ifLv4BossConsumeLives);
+        //判断是否消耗生命 不执行？
         if (enemyInstance.ifLv4BossConsumeLives)
         {
+            Debug.Log("判断天使是否消耗生命");
             enemyInstance.Defend -= 80;
             if (enemyInstance.Defend < 20)
             {
@@ -282,6 +286,7 @@ public class EnemySkill : MonoBehaviour
 
             enemyInstance.ifLv4BossConsumeLives = false;
             typeIn = ActionType.None;
+            yield return new WaitForSeconds(1);
         }
 
         switch (typeIn)

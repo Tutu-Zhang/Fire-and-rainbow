@@ -28,7 +28,7 @@ public class EnemyManager
 
         string[] enemyPos = LevelData["Pos"].Split('=');
 
-        Debug.Log("加载了" + enemyids.Length + "个敌人");
+        //Debug.Log("加载了" + enemyids.Length + "个敌人");
 
         for (int i = 0; i < enemyids.Length; i++)
         {
@@ -50,7 +50,7 @@ public class EnemyManager
             enemyList.Add(enemy);//存储到敌人列表
 
             //第一关敌人位置配置
-            Debug.Log(UIManager.Instance.GetUI<FightUI>("fightBackground").transform.Find("EnemyCase").position);
+            //Debug.Log(UIManager.Instance.GetUI<FightUI>("fightBackground").transform.Find("EnemyCase").position);
             obj.transform.position = UIManager.Instance.GetUI<FightUI>("fightBackground").transform.Find("EnemyCase").position;
         }
     }

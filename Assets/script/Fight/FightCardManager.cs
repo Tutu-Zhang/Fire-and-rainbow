@@ -52,8 +52,8 @@ public class FightCardManager
             {
                 num = "1";
             }
-            cardList.Add(num);//牌库，现在是没牌印3张牌，因为unity自带的random并非真随机，如果印一张抽一张很容易出现全1或者全0
-            Debug.Log("本次印牌为" + num + ",抽卡概率为" + card_probability);
+            cardList.Add(num);//牌库，现在是没牌印4张牌，因为unity自带的random并非真随机，如果印一张抽一张很容易出现全1或者全0
+            //Debug.Log("本次印牌为" + num + ",抽卡概率为" + card_probability);
         }
 
        

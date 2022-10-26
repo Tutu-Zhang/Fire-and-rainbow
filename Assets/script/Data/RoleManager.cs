@@ -28,7 +28,7 @@ public class RoleManager : MonoBehaviour
             
             cardList.Add(num);//相当于手牌列表
 
-            Debug.Log("success"+i);
+            //Debug.Log("success"+i);
         }
 
         

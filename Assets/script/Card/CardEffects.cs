@@ -109,7 +109,7 @@ public class CardEffects
             card += num;
         }
 
-        Debug.Log("0011本次印牌为" + card);
+        //Debug.Log("0011本次印牌为" + card);
         if (card == "0011")
         {
             MatchCard("1000");

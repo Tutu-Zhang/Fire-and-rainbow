@@ -31,7 +31,7 @@ public class LetterManager : MonoBehaviour
         //改变背景图物体
         BackgroundImg = GameObject.FindGameObjectWithTag("DialogueBackground").GetComponent<Image>();
         imgPath = "UI-img/CG/" + levelCount.ToString() + "after";
-        Debug.Log(imgPath);
+        //Debug.Log(imgPath);
         Texture2D texture = Resources.Load<Texture2D>(imgPath);
         Sprite sp = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         BackgroundImg.sprite = sp;
@@ -40,7 +40,7 @@ public class LetterManager : MonoBehaviour
         //获取旁白物体
         dialogueText = GameObject.FindGameObjectWithTag("DialogueText");
         MaxCount = int.Parse(ExcelReader.Instance.GetDialogue(levelCount, 0, "after"));//获取对白数目
-        Debug.Log("共有" + MaxCount + "句话");
+        //Debug.Log("共有" + MaxCount + "句话");
         ChangeDialogue();
 
         button.onClick.AddListener(ChangeDialogue);

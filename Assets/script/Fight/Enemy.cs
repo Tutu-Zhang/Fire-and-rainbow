@@ -37,8 +37,8 @@ public class Enemy : MonoBehaviour
     public int Attack;
     public int MaxHp;
     public int CurHp;
-    public int Lv4BossLives = 3;
-    public bool ifLv4BossConsumeLives = false;
+    public int Lv4BossLives;
+    public bool ifLv4BossConsumeLives;
 
     //组件相关
     SkinnedMeshRenderer _meshRenderer;
@@ -47,6 +47,8 @@ public class Enemy : MonoBehaviour
     public void Init(Dictionary<string,string> data)
     {
         this.data = data;
+        Lv4BossLives = 2;
+        ifLv4BossConsumeLives = false;
     }
 
     void Start()
@@ -71,15 +73,7 @@ public class Enemy : MonoBehaviour
         hpText = hpItemObj.transform.Find("EnemyHPText").GetComponent<Text>();
         hpImg = hpItemObj.transform.Find("EnemyHPFill").GetComponent<Image>();//找到血条图标
         hpHitImg = hpItemObj.transform.Find("EnemyHitHPFill").GetComponent<Image>();//找到血条图标
-        //defImg = hpItemObj.transform.Find("EnemyDEFFill").GetComponent<Image>();
-        //defHitImg = hpItemObj.transform.Find("EnemyHitDEFFill").GetComponent<Image>();
 
-
-        //设置血条位置|在素材里预设好，应该就不用这个步骤了吧
-        //hpItemObj.transform.position = Camera.main.WorldToScreenPoint(transform.position + Vector3.down*0.2f);//这里加向量是干什么了？
-        //actionObj.transform.position = Camera.main.WorldToScreenPoint(transform.Find("").position);//“”里面代表放置在敌人模型的哪个组件的位置上
-
-        //SetRandomAction();
 
         //初始化数值
         Attack = int.Parse(data["Attack"]);
@@ -130,18 +124,6 @@ public class Enemy : MonoBehaviour
         //StartCoroutine(ChangeEnemyDefHitFill());
     }
 
-/*    public IEnumerator ChangeEnemyDefHitFill()
-    {
-        while (defHitImg.fillAmount > defImg.fillAmount)
-        {
-            defHitImg.fillAmount -= 0.005f;
-            yield return new WaitForSeconds(0.02f);
-        }
-
-        hpHitImg.fillAmount = hpImg.fillAmount;
-        yield break;
-    }*/
-
     //敌人被选中时显示红边
     public void OnSelect()
     {
@@ -179,7 +161,7 @@ public class Enemy : MonoBehaviour
             if (CurHp <= 0 )
             {
                 //第四关boss有三条命
-                if (LevelManager.Instance != null && LevelManager.Instance.level == 4 && Lv4BossLives > 0)
+                if (LevelManager.Instance.level == 4 && Lv4BossLives > 0)
                 {
                     CurHp = 1;
                     Defend += 100;

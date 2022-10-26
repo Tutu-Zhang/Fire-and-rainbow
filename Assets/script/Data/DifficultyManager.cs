@@ -12,7 +12,7 @@ public class DifficultyManager : MonoBehaviour
     {
         DiffCount = LevelManager.Instance.diffCount;
 
-        Debug.Log(DiffCount);
+        //Debug.Log(DiffCount);
 
         DiffText = transform.Find("дя╤х").gameObject;
 

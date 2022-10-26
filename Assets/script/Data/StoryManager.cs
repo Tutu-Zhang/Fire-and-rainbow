@@ -35,7 +35,7 @@ public class StoryManager : MonoBehaviour
         //获取旁白物体
         dialogueText = GameObject.FindGameObjectWithTag("DialogueText");        
         MaxCount = int.Parse(ExcelReader.Instance.GetDialogue(levelCount,0,"before"));//获取对白数目
-        Debug.Log("共有"+MaxCount+"句话");
+        //Debug.Log("共有"+MaxCount+"句话");
         ChangeDialogue();
 
         button.onClick.AddListener(ChangeDialogue);

@@ -69,7 +69,7 @@ public class FightUI : UIBase
             {
                 cardId = cardId + PlayCardList[i].GetCardNum().ToString();
             }
-            Debug.Log(cardId);
+            //Debug.Log(cardId);
 
 
             //RemoveAllCards(true);//为true时为移除出牌区卡片，false时移除手牌区
@@ -152,7 +152,7 @@ public class FightUI : UIBase
     {
 
         playerHPBar = UIManager.Instance.CreatePlayerHpItem();
-        Debug.Log("找到血条");
+        //Debug.Log("找到血条");
         hpText = playerHPBar.transform.Find("PlayerHPText").GetComponent<Text>();
         hpImage = playerHPBar.transform.Find("PlayerHPFill").GetComponent<Image>();
         hpHitImage = playerHPBar.transform.Find("PlayerHitHPFill").GetComponent<Image>();
@@ -224,7 +224,7 @@ public class FightUI : UIBase
             //var Item = obj.AddComponent<CardItem>();
             string cardId = FightCardManager.Instance.DrawCard();
             Dictionary<string, string> data = GameConfigManager.Instance.GetCardById(cardId);
-            Debug.Log("当前创建的牌类型为" + System.Type.GetType(data["Script"]));
+            //Debug.Log("当前创建的牌类型为" + System.Type.GetType(data["Script"]));
             
             CardItem Item = obj.AddComponent(System.Type.GetType(data["Script"])) as CardItem;
             Item.Init(data,i);
@@ -246,7 +246,7 @@ public class FightUI : UIBase
 
         for(int i = 0;i < BuffList.Count; i++)
         {
-            Debug.Log("目前有buff:" + BuffList[i]);
+            //Debug.Log("目前有buff:" + BuffList[i]);
         }
     }
 
@@ -270,7 +270,7 @@ public class FightUI : UIBase
 
         for (int i = 0; i < BuffList.Count; i++)
         {
-            Debug.Log("目前有buff:" + BuffList[i].GetBuffId());
+            //Debug.Log("目前有buff:" + BuffList[i].GetBuffId());
         }
     }
 
@@ -279,7 +279,7 @@ public class FightUI : UIBase
     //更新手牌位置
     public void UpdateCardItemPos()
     {
-        Debug.Log("更新手牌位置");
+        //Debug.Log("更新手牌位置");
         for(int i = 0; i < cardItemList.Count; i++)
         {
             Transform card = cardItemList[i].transform;
@@ -292,7 +292,7 @@ public class FightUI : UIBase
     //更新出牌区位置
     public void UpdatePlayCardPos()
     {
-        Debug.Log("更新上方牌区位置");
+        //Debug.Log("更新上方牌区位置");
         for (int i = 0; i < PlayCardList.Count; i++)
         {
             Transform card = PlayCardList[i].transform;
@@ -316,7 +316,7 @@ public class FightUI : UIBase
     public bool MoveCardToPlayArea(CardItem card)
     {
         CardItem nowcard = card;
-        Debug.Log(nowcard);
+        //Debug.Log(nowcard);
 
         if (PlayCardList.Count < 4 && FightManager.Instance.fightUnit is FightPlayerTurn)
         {
@@ -325,7 +325,7 @@ public class FightUI : UIBase
             //Debug.Log("已经移动卡牌至出牌区");
             cardItemList.Remove(nowcard);
             UpdateCardItemPos();
-            Debug.Log("现在手牌区和出牌区各有" + cardItemList.Count + " " + PlayCardList.Count + "张牌");
+            //Debug.Log("现在手牌区和出牌区各有" + cardItemList.Count + " " + PlayCardList.Count + "张牌");
             return true;
         }
         else
